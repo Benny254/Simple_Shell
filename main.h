@@ -78,6 +78,18 @@ int init_env(sh_info_t *sh_info);
 int rem_env(sh_info_t *sh_info);
 int envpop(sh_info_t *sh_info);
 
+ssize_t buf_input(sh_info_t *sh_info, char **buff, size_t *len);
+ssize_t type_in(sh_info_t *sh_info);
+ssize_t bufread(sh_info_t *sh_info, char *buff, size_t *s);
+int nextline(sh_info_t *sh_info, char **ptr, size_t *length);
+void handlec(__attribute__((unused))int s);
+
+char *file_hist(sh_info_t *sh_info);
+int histfile(sh_info_t *sh_info);
+int histread(sh_info_t *sh_info);
+int list_hist(sh_info_t *sh_info, char *buff, int linecount);
+int histnum(sh_info_t *sh_info);
+
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1

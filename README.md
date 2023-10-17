@@ -63,3 +63,17 @@
 - init_env - to initialize new environment variable
 - rem_env - remove an environment variable
 - envpop - to populates env linked list
+
+- buf_input - to buffers chained commands
+- type_in - get a line minus the newline
+- bufread - read a buffer
+- nextline - get the next line of an input from STDIN
+- handlec - the block ctrl-C
+
+- file_hist - to get the history file
+- histfile - create file or appends to an existing file
+- histread - read history from file
+- list_hist - add entry to a history linked list
+- histnum - renumber the history linked list after changes
+
+

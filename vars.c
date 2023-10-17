@@ -72,36 +72,6 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 }
 
 /**
- * replace_alias - to replaces an aliases in the tokenized string
- * @info: the struct parameter
- *
- * Return: 1 if replaced, 0 otherwise
- */
-int replace_alias(info_t *info)
-{
-	int t = 0;
-	list_t *node;
-	char *p;
-
-	while (t < 10)
-	{
-	node = node_starts_with(info->alias, info->argv[0], '=');
-	if (!node)
-		return (0);
-	free(info->argv[0]);
-	p = _strchr(node->str, '=');
-	if (!p)
-		return (0);
-	p = _strdup(p + 1);
-	if (!p)
-		return (0);
-	info->argv[0] = p;
-	t++;
-	}
-	return (1);
-}
-
-/**
  * replace_vars - to replace vars in the tokenized string
  * @info: the struct parameter
  *
