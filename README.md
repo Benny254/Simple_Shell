@@ -58,4 +58,8 @@
 - bytemem - fill memory with constant byte
 - free_str - free a string of strings
 
-
+- prtenv - prints current environment
+- env_var - get value of an environ variable
+- init_env - to initialize new environment variable
+- rem_env - remove an environment variable
+- envpop - to populates env linked list
