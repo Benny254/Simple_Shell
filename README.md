@@ -52,4 +52,10 @@
 - node_get - get the index of a node
 - len_list - determine length of linked list
 
+- string_split - split a string into words
+- str_split - split a string into words & repeat delimiters are ignored
+- allocmem- reallocate a block of memory
+- bytemem - fill memory with constant byte
+- free_str - free a string of strings
+
 

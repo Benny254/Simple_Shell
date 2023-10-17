@@ -66,4 +66,10 @@ sh_list_t *node_start(sh_list_t *node, char *p, char c);
 ssize_t node_get(sh_list_t *h, list_t *node);
 size_t len_list(const sh_list_t *h);
 
+char **string_split(char *str, char d);
+char **str_split(char *str, char *d);
+void *allocmem(void *ptr, unsigned int a, unsigned int b);
+char *bytemem(char *s, char b, unsigned int n);
+void free_str(char **k);
+
 #endif
