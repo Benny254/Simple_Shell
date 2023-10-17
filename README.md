@@ -18,6 +18,9 @@
 
 - chk_filetype - function checks whether file specified is regular file
 - chk_cmd - manages PATH environment variable and finds commands
+- chk_start - check if needle starts with haystack
+- cat_str - concanates two strings
+- len_str - return the length of a string
 
 - do_exit - to exit the shell
 - change_dir - change the current directory of the process

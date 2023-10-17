@@ -32,6 +32,9 @@ int free_p(void **p);
 
 int chk_filetype(*sh_info, char *filepath);
 char *chk_cmd(sh_info_t *sh_info, char *p_str, char *cmd);
+char *chk_start(const char *haystack, const char *needle);
+char *cat_str(char *add_to, char *add_from);
+int len_str(char *st);
 
 int do_exit(sh_info_t *sh_info);
 int change_dir(sh_info_t *sh_info);
@@ -44,4 +47,5 @@ int alias_set(sh_info_t *sh_info, char *s);
 int alias_rp(sh_info_t *sh_info);
 int alias_prt(sh_list_t *node);
 int get_alias(sh_info_t *sh_info);
+
 #endif

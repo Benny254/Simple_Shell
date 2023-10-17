@@ -1,4 +1,4 @@
-#include "main.h"
+include "main.h"
 
 /**
  * alias_string - to set alias to string
@@ -49,26 +49,26 @@ int alias_set(sh_info_t *sh_info, char *s)
  */
 int alias_rp(sh_info_t *sh_info)
 {
-        int a = 0;
-        sh_list_t *node;
-        char *b;
+	int a = 0;
+	sh_list_t *node;
+	char *b;
 
-        while (a < 10)
-        {
-        node = node_start(sh_info->sh_alias, sh_info->argv[0], '=');
-        if (!node)
-                return (0);
-        free(sh_info->argv[0]);
-        b = loc_ch(node->str, '=');
-        if (!b)
-                return (0);
-        b = dupstr(b + 1);
-        if (!b)
-                return (0);
-        sh_info->argv[0] = b;
-        a++;
-        }
-        return (1);
+	while (a < 10)
+	{
+		node = node_start(sh_info->sh_alias, sh_info->argv[0], '=');
+		if (!node)
+			return (0);
+		free(sh_info->argv[0]);
+		b = loc_ch(node->str, '=');
+		if (!b)
+			return (0);
+		b = dupstr(b + 1);
+		if (!b)
+			return (0);
+		sh_info->argv[0] = b;
+		a++;
+	}
+	return (1);
 }
 
 /**

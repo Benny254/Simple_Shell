@@ -64,3 +64,57 @@ char *chk_cmd(sh_info_t *sh_info, char *p_str, char *cmd)
 	}
 	return (NULL);
 }
+
+/**
+ * cat_str - concanates two strings
+ * @add_to: destination buffer
+ * @add_from: source buffer
+ * Return: pointer to destination buffer
+ */
+char *cat_str(char *add_to, char *add_from)
+{
+	char *st = add_to;
+
+	for (; *add_to; add_to++)
+
+		for (; *add_from; add_from++, add_to++)
+		{
+			*add_to = *add_from;
+		}
+
+	*add_to = *add_from;
+
+	return (st);
+}
+
+/**
+ * chk_start - check if needle starts with haystack
+ * @haystack: string to be searched
+ * @needle: substring to find
+ * Return: address of next char of haystack, otherwise NULL
+ */
+char *chk_start(const char *haystack, const char *needle)
+{
+	while (*needle)
+		if (*needle++ != *haystack++)
+			return (NULL);
+	return ((char *)haystack);
+}
+
+/**
+ * len_str - return the length of a string
+ * @st: given string
+ * Return: length of string
+ */
+int len_str(char *st)
+{
+	int a;
+
+	if (!st)
+		return (0);
+
+	for (a = 0; *st != '\0'; a++)
+		st++;
+
+	return (a);
+}
