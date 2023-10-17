@@ -1,8 +1,8 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- * eprintch - writes character to stderr
- * @ch: character to print
+ * eprintch - to write the char to stderr
+ * @ch: the char to be printed
  * Return: On success 1
  */
 int eprintch(char ch)
@@ -21,9 +21,9 @@ int eprintch(char ch)
 }
 
 /**
- * write_ch - writes character to given fd
- * @ch: given character
- * @fd: file descriptor
+ * write_ch - to write character to a given fd
+ * @ch: a given character
+ * @fd: the file descriptor
  * Return: On success 1
  */
 int write_ch(char ch, int fd)
@@ -42,10 +42,10 @@ int write_ch(char ch, int fd)
 }
 
 /**
- * pfd_input - prints input string
- * @s: given string
- * @fd: file descriptor
- * Return: number of chars put
+ * pfd_input - to print an input string
+ * @s: a given string
+ * @fd: the file descriptor
+ * Return: the number of chars put
  */
 int pfd_input(char *s, int fd)
 {
@@ -61,11 +61,11 @@ int pfd_input(char *s, int fd)
 }
 
 /**
- * cp_char - duplicates characters
- * @p_str: PATH string
- * @a: starting index
- * @b: stopping index
- * Return: pointer to new buffer
+ * cp_char - to duplicate characters
+ * @p_str: the PATH string
+ * @a: the starting index
+ * @b: the stopping index
+ * Return: the pointer to new buffer
  */
 char *cp_char(char *p_str, int a, int b)
 {
@@ -80,8 +80,8 @@ char *cp_char(char *p_str, int a, int b)
 }
 
 /**
- * free_p - frees pointer and NULLs address
- * @p: address of pointer to free
+ * free_p - to free a pointer and NULLs address
+ * @p: an address of pointer to free
  * Return: 1 if success
  */
 int free_p(void **p)

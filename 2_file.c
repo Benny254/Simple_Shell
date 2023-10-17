@@ -1,9 +1,9 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- * string_convert - convert string representation of integer to integer value
- * @str: given string
- * Return: converted number otherwise -1 on error
+ * string_convert - to convert string representation of integer to integer value
+ * @str: the given string
+ * Return: the converted number otherwise -1 on error
  */
 int string_convert(char *str)
 {
@@ -28,10 +28,10 @@ int string_convert(char *str)
 }
 
 /**
- * print_err - prints error message
- * @sh_info: info struct
- * @s: string containing error type
- * Return: converted number otherwise, -1 on error
+ * print_err - to print error message
+ * @sh_info: an info struct
+ * @s: the string containing error type
+ * Return: to converted number otherwise, -1 on error
  */
 void print_err(info_t *sh_info, char *s)
 {
@@ -45,8 +45,8 @@ void print_err(info_t *sh_info, char *s)
 }
 
 /**
- * prints_string - prints input string
- * @s: given string
+ * prints_string - to print input string
+ * @s: the given string
  * Return: Null
  */
 void prints_string(char *s)
@@ -63,10 +63,10 @@ void prints_string(char *s)
 }
 
 /**
- * dec_print - function prints decimal number
- * @in: given input
- * @fd: file descriptor
- * Return: number
+ * dec_print - the function prints decimal number
+ * @in: a given input
+ * @fd: the file descriptor
+ * Return: the number
  */
 int dec_print(int in, int fd)
 {
@@ -101,8 +101,8 @@ int dec_print(int in, int fd)
 }
 
 /**
- * rm_comment - replaces first instance of '#' with '\0'
- * @addr: address of string to modify
+ * rm_comment - to replace the first instance of '#' with '\0'
+ * @addr: an address of string to modify
  * Return: null
  */
 void rm_comment(char *addr)

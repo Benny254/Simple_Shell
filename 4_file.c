@@ -1,10 +1,10 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- * chk_filetype - function checks whether file
+ * chk_filetype - the function checks whether file
  * specified is regular file
- * @sh_info: info struct
- * @filepath: path to file
+ * @sh_info: an info struct
+ * @filepath: the path to file
  * Return: 1 if true, 0 otherwise
  */
 int chk_filetype(*sh_info, char *filepath)
@@ -23,12 +23,12 @@ int chk_filetype(*sh_info, char *filepath)
 }
 
 /**
- * chk_cmd - manages PATH environment variable and finds commands
+ * chk_cmd - to manage PATH environment variable and finds commands
  * executable within specified paths
- * @sh_info: info struct
- * @p_str: PATH string
+ * @sh_info: an info struct
+ * @p_str: the PATH string
  * @cmd: cmd to find
- * Return: path of cmd if found, otherwise NULL
+ * Return: the path of cmd if found, otherwise NULL
  */
 char *chk_cmd(info_t *sh_info, char *p_str, char *cmd)
 {
