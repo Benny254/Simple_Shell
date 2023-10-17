@@ -30,14 +30,14 @@ int chk_filetype(*sh_info, char *filepath)
  * @cmd: cmd to find
  * Return: the path of cmd if found, otherwise NULL
  */
-char *chk_cmd(info_t *sh_info, char *p_str, char *cmd)
+char *chk_cmd(sh_info_t *sh_info, char *p_str, char *cmd)
 {
 	int l = 0, p = 0;
 	char *path;
 
 	if (!p_str)
 		return (NULL);
-	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
+	if ((len_str(cmd) > 2) && chk_start(cmd, "./"))
 	{
 		if (chk_filetype(sh_info, cmd))
 			return (cmd);
@@ -48,11 +48,11 @@ char *chk_cmd(info_t *sh_info, char *p_str, char *cmd)
 		{
 			path = cp_char(p_str, p, l);
 			if (!*path)
-				_strcat(path, cmd);
+				cat_str(path, cmd);
 			else
 			{
-				_strcat(path, "/");
-				_strcat(path, cmd);
+				cat_str(path, "/");
+				cat_str(path, cmd);
 			}
 			if (chk_filetype(sh_info, path))
 				return (path);

@@ -1,17 +1,5 @@
 #include "main.h"
 /**
- * _myhistory - to display the history list, one command by line, preceded
- *  with line numbers, starting at 0.
- * @info: The structure containing potential arguments. Used to maintain
- * constant function prototype.
- *  Return: Always 0
- */
-int _myhistory(info_t *info)
-{
-	print_list(info->history);
-	return (0);
-}
-/**
  * unset_alias - to set alias to string
  * @info: The Parameter Struct
  * @str: a string alias

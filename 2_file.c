@@ -1,7 +1,8 @@
 #include "main.h"
 
 /**
- * string_convert - to convert string representation of integer to integer value
+ * string_convert - to convert string representation
+ * of integer to integer value
  * @str: the given string
  * Return: the converted number otherwise -1 on error
  */
@@ -33,7 +34,7 @@ int string_convert(char *str)
  * @s: the string containing error type
  * Return: to converted number otherwise, -1 on error
  */
-void print_err(info_t *sh_info, char *s)
+void print_err(sh_info_t *sh_info, char *s)
 {
 	prints_string(sh_info->fname);
 	prints_string(": ");
@@ -70,16 +71,16 @@ void prints_string(char *s)
  */
 int dec_print(int in, int fd)
 {
-	int (*__putchar)(char) = _putchar;
+	int (*_printch)(char) = printch;
 	int l, c = 0;
 	unsigned int _abs_, b;
 
 	if (fd == STDERR_FILENO)
-		__putchar = _eputchar;
+		_printch = eprintch;
 	if (in < 0)
 	{
 		_abs_ = -in;
-		__putchar('-');
+		_printch('-');
 		c++;
 	}
 	else
@@ -89,12 +90,12 @@ int dec_print(int in, int fd)
 	{
 		if (_abs_ / l)
 		{
-			__putchar('0' + b / l);
+			_printch('0' + b / l);
 			c++;
 		}
 		b %= l;
 	}
-	__putchar('0' + b);
+	_printch('0' + b);
 	c++;
 
 	return (c);

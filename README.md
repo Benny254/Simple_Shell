@@ -15,4 +15,8 @@
 - free_p - frees pointer and NULLs address
 - chk_filetype - function checks whether file specified is regular file
 - chk_cmd - manages PATH environment variable and finds commands
-
+- do_exit - to exit the shell
+- change_dir - change the current directory of the process
+- help_func - change the current directory of the process
+- disp_hist - to display the history list, one command by line preceded with line numbers
+- new_str - replaces a string

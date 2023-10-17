@@ -5,9 +5,9 @@
  * @sh_info: struct
  * Return: 1 if true, 0 otherwise
  */
-int chk_interactive(info_t *sh_info)
+int chk_interactive(sh_info_t *sh_info)
 {
-	return (isatty(STDIN_FILENO) && sh_info->readfd <= 2);
+	return (isatty(STDIN_FILENO) && sh_info->fdinput <= 2);
 }
 
 /**

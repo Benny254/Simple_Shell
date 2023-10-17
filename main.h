@@ -33,4 +33,9 @@ int free_p(void **p);
 int chk_filetype(*sh_info, char *filepath);
 char *chk_cmd(info_t *sh_info, char *p_str, char *cmd);
 
+int do_exit(sh_info_t *sh_info);
+int change_dir(sh_info_t *sh_info);
+int help_func(sh_info_t *sh_info);
+int disp_hist(sh_info_t *sh_info);
+int new_str(char **a, char *b);
 #endif
