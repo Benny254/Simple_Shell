@@ -39,3 +39,9 @@
 - print_str - print an input string
 - printch - write the character c to stdout
 - comp_str - perform lexicogarphic comparison of two strings
+
+- new_node - add node to start of the list
+- node_add - add a node to the end of the list
+- str_print - print only the str element of a list_t linked list
+- node_delete - delete node at given index
+- node_free - free all nodes of a list

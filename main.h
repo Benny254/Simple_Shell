@@ -54,4 +54,10 @@ void print_str(char *s);
 int printch(char c);
 int comp_str(char *s1, char *s2);
 
+sh_list_t *new_node(sh_list_t **head, const char *str, int num);
+sh_list_t *node_add(sh_list_t **head, const char *str, int num);
+size_t str_print(const sh_list_t *h);
+int node_delete(sh_list_t **head, unsigned int index);
+void node_free(sh_list_t **h_ptr);
+
 #endif
