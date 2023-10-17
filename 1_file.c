@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * chk_interactive - checks if shell is interactive mode
+ * chk_interactive - to check if shell is interactive mode
  * @sh_info: struct
  * Return: 1 if true, 0 otherwise
  */
@@ -11,9 +11,9 @@ int chk_interactive(info_t *sh_info)
 }
 
 /**
- * _delim - checks if character is delimeter
- * @ch: given character
- * @d: delimeter string
+ * _delim - to check if character is delimeter
+ * @ch: the given character
+ * @d: Delimeter string
  * Return: 1 if true, 0 otherwise
  */
 int _delim(char ch, char *d)
@@ -25,8 +25,8 @@ int _delim(char ch, char *d)
 }
 
 /**
- * is_upper - checks  alphabetic character
- * @ch: given character
+ * is_upper - to check  alphabetic character
+ * @ch: the given character
  * Return: 1 if true, 0 otherwise
  */
 int is_upper(int ch)
@@ -38,9 +38,9 @@ int is_upper(int ch)
 }
 
 /**
- * convert_string - convert string to integer
- * @str: given string
- * Return: converted string
+ * convert_string - to convert string to integer
+ * @str: the given string
+ * Return:the  converted string
  */
 int convert_string(char *str)
 {
@@ -69,12 +69,12 @@ int convert_string(char *str)
 }
 
 /**
- * change_number - converts long integer to character array representing
+ * change_number - to convert long integer to character array representing
  * number in a given base
- * @n: given number
- * @b: number system in which a given number is represented
- * @f: flags
- * Return: string
+ * @n: the given number
+ * @b: the number system in which a given number is represented
+ * @f: the flags
+ * Return: a string
  */
 char *change_number(long int n, int b, int f)
 {
