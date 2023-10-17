@@ -60,4 +60,10 @@ size_t str_print(const sh_list_t *h);
 int node_delete(sh_list_t **head, unsigned int index);
 void node_free(sh_list_t **h_ptr);
 
+char **str_array(sh_list_t *head);
+size_t elem_list(const sh_list_t *h);
+sh_list_t *node_start(sh_list_t *node, char *p, char c);
+ssize_t node_get(sh_list_t *h, list_t *node);
+size_t len_list(const sh_list_t *h);
+
 #endif

@@ -45,3 +45,11 @@
 - str_print - print only the str element of a list_t linked list
 - node_delete - delete node at given index
 - node_free - free all nodes of a list
+
+- str_array - return array of strings of the list->str
+- elem_list - print all elements of a linked list
+- node_start - return node whose string starts with prefix
+- node_get - get the index of a node
+- len_list - determine length of linked list
+
+
