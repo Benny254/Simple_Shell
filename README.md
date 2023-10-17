@@ -33,3 +33,9 @@
 - alias_rp - replaces aliases in tokenized string
 - alias_prt - print an alias string
 - get_alias - mimics alias builtin
+
+- cpy_str - copy a string
+- dupstr - duplicate string
+- print_str - print an input string
+- printch - write the character c to stdout
+- comp_str - perform lexicogarphic comparison of two strings

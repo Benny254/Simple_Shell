@@ -48,4 +48,10 @@ int alias_rp(sh_info_t *sh_info);
 int alias_prt(sh_list_t *node);
 int get_alias(sh_info_t *sh_info);
 
+char *cpy_str(char *d, char *s);
+char *dupstr(const char *st);
+void print_str(char *s);
+int printch(char c);
+int comp_str(char *s1, char *s2);
+
 #endif
