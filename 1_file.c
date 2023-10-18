@@ -1,22 +1,11 @@
-#include "main.h"
-#define CONVERT_UNSIGNED 1
-#define CONVERT_LOWERCASE 1
+#include "main.h"i
 
 /**
-<<<<<<< HEAD
  * chk_interactive - to check if shell is interactive mode
  * @info: struct
- * Return: 1 if true, 0 otherwise
+ * Return: 1 if interactive mode, 0 if not
  */
 int chk_interactive(info_t *info)
-=======
- * chk_interactive - Check if shell is in interactive mode.
- * @sh_info: Pointer to the siginfo_t structure.
- *
- * Return: 1 if true, 0 otherwise.
- */
-int chk_interactive(siginfo_t *sh_info)
->>>>>>> 4403e7c54e1a4b2f3403c29df182581d9b118ddd
 {
 	return (isatty(STDIN_FILENO) && info->fdinput <= 2);
 }

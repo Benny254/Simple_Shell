@@ -1,6 +1,4 @@
 #include "main.h"
-#define WRITE_BUF_SIZE 1024
-#define BUF_FLUSH 0 
 
 /**
  * eprintch - to write the char to stderr

@@ -1,4 +1,4 @@
-include "main.h"
+#include "main.h"
 
 /**
  * alias_string - to set alias to string

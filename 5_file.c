@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * do_exit - to exit the shell
  * @info: structure containing potential arguments used to maintain
