@@ -179,7 +179,7 @@ typedef struct passinfo
 	char *fname;
 	list_t *env;
 	list_t *node_hist;
-	list_t *alias;
+	list_t *sh_alias;
 	char **environ;
 	int env_changed;
 	int status;

@@ -7,7 +7,7 @@
  * @p: an address of current position in buff
  * Return: 1 if chain delimeter, 0 otherwise
  */
-int testchain(sh_info_t *shinfo, char *buff, size_t *p)
+int testchain(sh_info_t *sh_info, char *buff, size_t *p)
 {
 	size_t m = *p;
 
@@ -25,7 +25,7 @@ int testchain(sh_info_t *shinfo, char *buff, size_t *p)
 	}
 	else if (buff[m] == ';')
 	{
-		buff[m] = 0; 
+		buff[m] = 0;
 		sh_info->cmd_buf_type = CMD_CHAIN;
 	}
 	else

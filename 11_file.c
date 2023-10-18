@@ -5,7 +5,7 @@
  * @sh_info: structure containing potential arguments
  * Return: Always 0 (Succes)
  */
-int _myenv(sh_info_t *sh_info)
+int prtenv(sh_info_t *sh_info)
 {
 	str_print(sh_info->env);
 	return (0);
