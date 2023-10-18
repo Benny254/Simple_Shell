@@ -2,15 +2,15 @@
 
 /**
  * file_hist - to get the history file
- * @sh_info: parameter struct
+ * @info: parameter struct
  * Return: allocated string containg history file
  */
 
-char *file_hist(sh_info_t *sh_info)
+char *file_hist(info_t *info)
 {
 	char *buff, *d;
 
-	d = env_var(sh_info, "HOME=");
+	d = env_var(info, "HOME=");
 	if (!d)
 		return (NULL);
 	buff = malloc(sizeof(char) * (len_str(d) + len_str(HIST_FILE) + 2));
@@ -25,13 +25,13 @@ char *file_hist(sh_info_t *sh_info)
 
 /**
  * histfile - create file or appends to an existing file
- * @sh_info:  Parameter struct
+ * @info:  Parameter struct
  * Return: 1 on success, else -1
  */
-int histfile(sh_info_t *sh_info)
+int histfile(info_t *info)
 {
 	ssize_t fd;
-	char *filename = file_hist(sh_info);
+	char *filename = file_hist(info);
 	list_t *node = NULL;
 
 	if (!filename)
@@ -41,7 +41,7 @@ int histfile(sh_info_t *sh_info)
 	free(filename);
 	if (fd == -1)
 		return (-1);
-	for (node = sh_info->node_hist; node; node = node->next)
+	for (node = info->node_hist; node; node = node->next)
 	{
 		pfd_input(node->str, fd);
 		write_ch('\n', fd);
@@ -53,15 +53,15 @@ int histfile(sh_info_t *sh_info)
 
 /**
  * histread - read history from file
- * @sh_info: Parameter struct
+ * @info: Parameter struct
  * Return: the histcount on success, 0 otherwise
  */
-int histread(sh_info_t *sh_info)
+int histread(info_t *info)
 {
 	int a, b = 0, linecount = 0;
 	ssize_t fd, rdlen, f = 0;
 	struct stat st;
-	char *buff = NULL, *filename = file_hist(sh_info);
+	char *buff = NULL, *filename = file_hist(info);
 
 	if (!filename)
 		return (0);
@@ -86,47 +86,47 @@ int histread(sh_info_t *sh_info)
 		if (buff[i] == '\n')
 		{
 			buff[a] = 0;
-			list_hist(sh_info, buff + b, linecount++);
+			list_hist(info, buff + b, linecount++);
 			b = a + 1;
 		}
 	if (b != a)
 		list_hist(info, buff + b, linecount++);
 	free(buff);
-	sh_info->histcount = linecount;
-	while (sh_info->histcount-- >= HIST_MAX)
-		node_delete(&(sh_info->node_hist), 0);
-	histnum(sh_info);
-	return (sh_info->histcount);
+	info->histcount = linecount;
+	while (info->histcount-- >= HIST_MAX)
+		node_delete(&(info->node_hist), 0);
+	histnum(info);
+	return (info->histcount);
 }
 
 /**
  * list_hist - add entry to a history linked list
- * @sh_info: structure containing potential arguments
+ * @info: structure containing potential arguments
  * @buff: a buffer
  * @linecount: history linecount
  * Return: Always 0
  */
-int list_hist(sh_info_t *sh_info, char *buff, int linecount)
+int list_hist(info_t *info, char *buff, int linecount)
 {
 	list_t *node = NULL;
 
-	if (sh_info->node_hist)
+	if (info->node_hist)
 		node = info->node_hist;
 	node_add(&node, buff, linecount);
 
-	if (!sh_info->node_hist)
-		sh_info->node_hist = node;
+	if (!info->node_hist)
+		info->node_hist = node;
 	return (0);
 }
 
 /**
  * histnum - renumber the history linked list after changes
- * @sh_info: The tructure containing potential arguments
+ * @info: The tructure containing potential arguments
  * Return: new histcount
  */
-int histnum(sh_info_t *sh_info)
+int histnum(info_t *info)
 {
-	list_t *node = sh_info->node_hist;
+	list_t *node = info->node_hist;
 	int h = 0;
 
 	while (node)
@@ -134,5 +134,5 @@ int histnum(sh_info_t *sh_info)
 		node->num = h++;
 		node = node->next;
 	}
-	return (sh_info->histcount = h);
+	return (info->histcount = h);
 }

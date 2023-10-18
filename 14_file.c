@@ -2,29 +2,29 @@
 
 /**
  * envstr - return the string array copy of our environ
- * @sh_info: The structure containing potential arguments
+ * @info: The structure containing potential arguments
  * Return: Always 0
  */
-char **envstr(sh_info_t *sh_info)
+char **envstr(info_t *info)
 {
-	if (!sh_info->environ || sh_info->env_changed)
+	if (!info->environ || info->env_changed)
 	{
-		sh_info->environ = str_array(sh_info->env);
-		sh_info->env_changed = 0;
+		info->environ = str_array(info->env);
+		info->env_changed = 0;
 	}
 
-	return (sh_info->environ);
+	return (info->environ);
 }
 
 /**
  * rem_venv - remove an environment variable
- * @sh_info: the structure containing potential arguments
+ * @info: the structure containing potential arguments
  * @v: string env var property
  * Return: 1 on delete, 0 otherwise
  */
-int rem_venv(sh_info_t *sh_info, char *v)
+int rem_venv(info_t *info, char *v)
 {
-	list_t *node = sh_info->env;
+	list_t *node = info->env;
 	char *p;
 	size_t k;
 
@@ -36,26 +36,26 @@ int rem_venv(sh_info_t *sh_info, char *v)
 	p = chk_start(node->str, v);
 	if (p && *p == '=')
 	{
-		sh_info->env_changed = node_delete(&(sh_info->env), k);
+		info->env_changed = node_delete(&(info->env), k);
 		k = 0;
-		node = sh_info->env;
+		node = info->env;
 	}
 	else
 		{
 		node = node->next;
 		}
 	}
-	return (sh_info->env_changed);
+	return (info->env_changed);
 }
 
 /**
  * init_evar - to initialize a new environment variable
- * @sh_info: structure containing potential arguments
+ * @info: structure containing potential arguments
  * @v: string env var property
  * @value: string env var value
  * Return: Always 0
  */
-int init_evar(sh_info_t *sh_info, char *v, char *value)
+int init_evar(info_t *info, char *v, char *value)
 {
 	char *buff = NULL;
 	list_t *node;
@@ -70,7 +70,7 @@ int init_evar(sh_info_t *sh_info, char *v, char *value)
 	cpy_str(buff, v);
 	cat_str(buff, "=");
 	cat_str(buff, value);
-	node = sh_info->env;
+	node = info->env;
 
 	for (; node; node = node->next)
 	{
@@ -79,75 +79,75 @@ int init_evar(sh_info_t *sh_info, char *v, char *value)
 	{
 		free(node->str);
 		node->str = buff;
-		sh_info->env_changed = 1;
+		info->env_changed = 1;
 		free(buff);
 		return (0);
 	}
 		}
-		node_add(&(sh_info->env), buff, 0);
+		node_add(&(info->env), buff, 0);
 		free(buff);
-		sh_info->env_changed = 1;
+		info->env_changed = 1;
 		return (0);
 }
 
 /**
  * int_info - initialize sh_info_t struct
- * @sh_info: the struct address
+ * @info: the struct address
  * @v: argument vector
  */
-void int_info(sh_info_t *sh_info, char **v)
+void int_info(info_t *info, char **v)
 {
 	int a = 0;
 
-	sh_info->fname = v[0];
-	if (sh_info->arg)
+	info->fname = v[0];
+	if (info->arg)
 	{
-	sh_info->argv = str_split(sh_info->arg, " \t");
-	if (!sh_info->argv)
+	info->argv = str_split(info->arg, " \t");
+	if (!info->argv)
 	{
-		sh_info->argv = malloc(sizeof(char *) * 2);
-	if (sh_info->argv)
+		info->argv = malloc(sizeof(char *) * 2);
+	if (info->argv)
 		{
-		sh_info->argv[0] = dupstr(sh_info->arg);
-		sh_info->argv[1] = NULL;
+		info->argv[0] = dupstr(info->arg);
+		info->argv[1] = NULL;
 		}
 	}
 		a = 0;
-		while (sh_info->argv && sh_info->argv[y])
+		while (info->argv && info->argv[y])
 		a++;
 
 		sh_info->argc = a;
 
-		alias_rp(sh_info);
-		vars_rp(sh_info);
+		alias_rp(info);
+		vars_rp(info);
 	}
 }
 
 /**
  * infofr - free sh_info_t struct fields
- * @sh_info: struct address
+ * @info: struct address
  * @f: true if freeing all fields
  */
-void infofr(sh_info_t *sh_info, int f)
+void infofr(info_t *info, int f)
 {
-	free_str(sh_info->argv);
-	sh_info->argv = NULL;
-	sh_info->path = NULL;
+	free_str(info->argv);
+	info->argv = NULL;
+	info->path = NULL;
 	if (f)
 	{
-		if (!sh_info->cmd_buf)
-			free(sh_info->arg);
-		if (sh_info->env)
-			node_free(&(sh_info->env));
-		if (sh_info->node_hist)
+		if (!info->cmd_buf)
+			free(info->arg);
+		if (info->env)
+			node_free(&(info->env));
+		if (info->node_hist)
 			node_free(&(info->node_hist));
-		if (sh_info->sh_alias)
-			node_free(&(sh_info->sh_alias));
-		free_str(sh_info->environ);
-			sh_info->environ = NULL;
-		free_p((void **)sh_info->cmd_buf);
-		if (sh_info->fdinput > 2)
-			close(sh_info->fdinput);
+		if (info->alias)
+			node_free(&(info->alias));
+		free_str(info->environ);
+		info->environ = NULL;
+		free_p((void **)info->cmd_buf);
+		if (info->fdinput > 2)
+			close(info->fdinput);
 		printch(BUF_FLUSH);
 	}
 }

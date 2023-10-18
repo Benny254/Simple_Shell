@@ -7,18 +7,18 @@
  * @num: node index used by history
  * Return: list size
  */
-sh_list_t *new_node(sh_list_t **head, const char *str, int num)
+list_t *new_node(list_t **head, const char *str, int num)
 {
-	sh_list_t *first;
+	list_t *first;
 
 	if (!head)
 		return (NULL);
 
-	first = malloc(sizeof(sh_list_t));
+	first = malloc(sizeof(list_t));
 	if (!first)
 	return (NULL);
 
-	bytemem((void *)first, 0, sizeof(sh_list_t));
+	bytemem((void *)first, 0, sizeof(list_t));
 	first->num = num;
 
 	if (str)
@@ -48,7 +48,7 @@ sh_list_t *new_node(sh_list_t **head, const char *str, int num)
  * @num: the node index used by history
  * Return: the size of list
  */
-sh_list_t *node_add(sh_list_t **head, const char *str, int num)
+list_t *node_add(list_t **head, const char *str, int num)
 {
 	list_t *last, *node;
 
@@ -56,11 +56,11 @@ sh_list_t *node_add(sh_list_t **head, const char *str, int num)
 		return (NULL);
 
 	node = *head;
-	last = malloc(sizeof(sh_list_t));
+	last = malloc(sizeof(list_t));
 	if (!last)
 		return (NULL);
 
-	bytemem((void *)last, 0, sizeof(sh_list_t));
+	bytemem((void *)last, 0, sizeof(list_t));
 	last->num = num;
 
 	if (str)
@@ -90,7 +90,7 @@ sh_list_t *node_add(sh_list_t **head, const char *str, int num)
  * @h: the pointer to first node
  * Return: the size of list
  */
-size_t str_print(const sh_list_t *h)
+size_t str_print(const list_t *h)
 {
 	size_t a;
 
@@ -109,9 +109,9 @@ size_t str_print(const sh_list_t *h)
  * @index: index of node to delete
  * Return: 1 on success, 0 otherwise
  */
-int node_delete(sh_list_t **head, unsigned int index)
+int node_delete(list_t **head, unsigned int index)
 {
-	sh_list_t *node, *prev;
+	list_t *node, *prev;
 	unsigned int l;
 
 	if (!head || !*head)
@@ -146,9 +146,9 @@ int node_delete(sh_list_t **head, unsigned int index)
  * @h_ptr: an address of pointer to head node
  * Return: void
  */
-void node_free(sh_list_t **h_ptr)
+void node_free(list_t **h_ptr)
 {
-	sh_list_t *node, *next_node, *head;
+	list_t *node, *next_node, *head;
 
 	if (!h_ptr || !*h_ptr)
 	return;

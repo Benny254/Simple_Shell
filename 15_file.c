@@ -2,14 +2,14 @@
 
 /**
  * infoclr - initialize sh_info_t struct
- * @sh_info: struct address
+ * @info: struct address
  */
-void infoclr(sh_info_t *sh_info)
+void infoclr(info_t *info)
 {
-	sh_info->arg = NULL;
-	sh_info->path = NULL;
-	sh_info->argv = NULL;
-	sh_info->argc = 0;
+	info->arg = NULL;
+	info->path = NULL;
+	info->argv = NULL;
+	info->argc = 0;
 }
 
 /**

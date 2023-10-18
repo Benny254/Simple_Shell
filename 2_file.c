@@ -30,17 +30,17 @@ int string_convert(char *str)
 
 /**
  * print_err - to print error message
- * @sh_info: an info struct
+ * @info: an info struct
  * @s: the string containing error type
  * Return: to converted number otherwise, -1 on error
  */
-void print_err(sh_info_t *sh_info, char *s)
+void print_err(info_t *info, char *s)
 {
-	prints_string(sh_info->fname);
+	prints_string(info->fname);
 	prints_string(": ");
-	dec_print(sh_info->line_count, STDERR_FILENO);
+	dec_print(info->line_count, STDERR_FILENO);
 	prints_string(": ");
-	prints_string(sh_info->argv[0]);
+	prints_string(info->argv[0]);
 	prints_string(": ");
 	prints_string(s);
 }

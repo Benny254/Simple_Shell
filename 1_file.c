@@ -2,12 +2,12 @@
 
 /**
  * chk_interactive - to check if shell is interactive mode
- * @sh_info: struct
+ * @info: struct
  * Return: 1 if true, 0 otherwise
  */
-int chk_interactive(sh_info_t *sh_info)
+int chk_interactive(info_t *info)
 {
-	return (isatty(STDIN_FILENO) && sh_info->fdinput <= 2);
+	return (isatty(STDIN_FILENO) && info->fdinput <= 2);
 }
 
 /**
