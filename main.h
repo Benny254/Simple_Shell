@@ -12,14 +12,22 @@
 #include <fcntl.h>
 #include <errno.h>
 
+<<<<<<< HEAD
 int chk_interactive(info_t *info);
+=======
+int chk_interactive(siginfo_t *sh_info);
+>>>>>>> 4403e7c54e1a4b2f3403c29df182581d9b118ddd
 int _delim(char ch, char *d);
 int is_upper(int ch);
 int convert_string(char *str);
 char *change_number(long int n, int b, int f);
 
 int string_convert(char *str);
+<<<<<<< HEAD
 void print_err(sh_info_t *info, char *s);
+=======
+void print_err(siginfo_t *sh_info, char *s);
+>>>>>>> 4403e7c54e1a4b2f3403c29df182581d9b118ddd
 void prints_string(char *s);
 int dec_print(int in, int fd);
 void rm_comment(char *addr);
@@ -30,12 +38,23 @@ int pfd_input(char *s, int fd);
 char *cp_char(char *p_str, int a, int b);
 int free_p(void **p);
 
+<<<<<<< HEAD
 int chk_filetype(*info, char *filepath);
 char *chk_cmd(info_t *info, char *p_str, char *cmd);
+=======
+<<<<<<< HEAD
+int chk_filetype(siginfo_t *sh_info, char *filepath);
+char *chk_cmd(siginfo_t *sh_info, char *p_str, char *cmd);
+=======
+int chk_filetype(*sh_info, char *filepath);
+char *chk_cmd(sh_info_t *sh_info, char *p_str, char *cmd);
+>>>>>>> 4403e7c54e1a4b2f3403c29df182581d9b118ddd
 char *chk_start(const char *haystack, const char *needle);
 char *cat_str(char *add_to, char *add_from);
 int len_str(char *st);
+>>>>>>> 265300be8892b6c62249aa38f7bff0b0d0436c43
 
+<<<<<<< HEAD
 int do_exit(info_t *info);
 int change_dir(info_t *info);
 int help_func(info_t *info);
@@ -47,6 +66,26 @@ int alias_set(info_t *info, char *s);
 int alias_rp(info_t *info);
 int alias_prt(list_t *node);
 int get_alias(info_t *info);
+=======
+int do_exit(siginfo_t *sh_info);
+int change_dir(siginfo_t *sh_info);
+int help_func(siginfo_t *sh_info);
+int disp_hist(siginfo_t *sh_info);
+int new_str(char **a, char *b);
+
+<<<<<<< HEAD
+int alias_string(siginfo_t *sh_info, char *s);
+int alias_set(siginfo_t *sh_info, char *s);
+int alias_rp(siginfo_t *sh_info);
+int alias_prt; typedef struct sh_list_t *node;
+int get_alias(siginfo_t *sh_info);
+=======
+int alias_string(sh_info_t *sh_info, char *s);
+int alias_set(sh_info_t *sh_info, char *s);
+int alias_rp(sh_info_t *sh_info);
+int alias_prt(sh_list_t *node);
+int get_alias(sh_info_t *sh_info);
+>>>>>>> 4403e7c54e1a4b2f3403c29df182581d9b118ddd
 
 char *cpy_str(char *d, char *s);
 char *dupstr(const char *st);
@@ -205,4 +244,5 @@ typedef struct builtin
 	int (*func)(sh_info_t *);
 } builtin_table;
 
+>>>>>>> 265300be8892b6c62249aa38f7bff0b0d0436c43
 #endif

@@ -1,4 +1,6 @@
 #include "main.h"
+#define WRITE_BUF_SIZE 1024
+#define BUF_FLUSH 0 
 
 /**
  * eprintch - to write the char to stderr
@@ -28,16 +30,16 @@ int eprintch(char ch)
  */
 int write_ch(char ch, int fd)
 {
-	static int l;
+	static int i;
 	static char b[WRITE_BUF_SIZE];
 
 	if (ch == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(fd, b, l);
-		l = 0;
+		write(fd, b, i);
+		i = 0;
 	}
 	if (ch != BUF_FLUSH)
-		b[l++] = ch;
+		b[i++] = ch;
 	return (1);
 }
 
