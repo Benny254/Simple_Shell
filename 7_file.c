@@ -1,4 +1,6 @@
 #include "main.h"
+#define BUF_FLUSH 0x8000
+#define WRITE_BUF_SIZE 1024
 
 /**
  * cpy_str - copy a string
@@ -6,18 +8,16 @@
  * @s: source
  * Return: the pointer to destination
  */
-char *cpy_str(char *d, char *s)
+char *cpy_str(char *dest, const char *src)
 {
 	int pt;
 
-	if (d == s || s == 0)
-		return (d);
-	for (pt = 0; src[pt]; pt++)
-	{
-		d[pt] = s[pt];
+	for (pt = 0; src[pt]; pt++) {
+	dest[pt] = src[pt];
 	}
-	d[pt] = 0;
-	return (d);
+	dest[pt] = '\0';
+
+	return dest;
 }
 
 /**
@@ -47,7 +47,7 @@ char *dupstr(const char *st)
  * @s: string to be printed
  * Return: Null
  */
-void print_str(char *s)
+void print_str(char *str, char *s)
 {
 	if (!s)
 		return;
@@ -56,7 +56,7 @@ void print_str(char *s)
 
 	while (s[len] != '\0')
 	{
-		printch(str[len]);
+		eprintch(str[len]);
 		len++;
 	}
 }

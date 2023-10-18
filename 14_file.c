@@ -1,11 +1,12 @@
 #include "main.h"
+#define BUF_FLUSH
 
 /**
  * envstr - return the string array copy of our environ
  * @sh_info: The structure containing potential arguments
  * Return: Always 0
  */
-char **envstr(sh_info_t *sh_info)
+char **envstr(siginfo_t *sh_info)
 {
 	if (!sh_info->environ || sh_info->env_changed)
 	{
@@ -55,7 +56,7 @@ int rem_venv(sh_info_t *sh_info, char *v)
  * @value: string env var value
  * Return: Always 0
  */
-int init_evar(sh_info_t *sh_info, char *v, char *value)
+int init_evar(siginfo_t *sh_info, char *v, char *value)
 {
 	char *buff = NULL;
 	list_t *node;
@@ -95,7 +96,7 @@ int init_evar(sh_info_t *sh_info, char *v, char *value)
  * @sh_info: the struct address
  * @v: argument vector
  */
-void int_info(sh_info_t *sh_info, char **v)
+void int_info(siginfo_t *sh_info, char **v)
 {
 	int a = 0;
 
@@ -128,7 +129,7 @@ void int_info(sh_info_t *sh_info, char **v)
  * @sh_info: struct address
  * @f: true if freeing all fields
  */
-void infofr(sh_info_t *sh_info, int f)
+void infofr(siginfo_t *sh_info, int f)
 {
 	free_str(sh_info->argv);
 	sh_info->argv = NULL;
@@ -140,7 +141,7 @@ void infofr(sh_info_t *sh_info, int f)
 		if (sh_info->env)
 			node_free(&(sh_info->env));
 		if (sh_info->node_hist)
-			node_free(&(info->node_hist));
+			node_free(&(infofr->node_hist));
 		if (sh_info->sh_alias)
 			node_free(&(sh_info->sh_alias));
 		free_str(sh_info->environ);
@@ -148,6 +149,6 @@ void infofr(sh_info_t *sh_info, int f)
 		free_p((void **)sh_info->cmd_buf);
 		if (sh_info->fdinput > 2)
 			close(sh_info->fdinput);
-		printch(BUF_FLUSH);
+		eprintch(BUF_FLUSH);
 	}
 }

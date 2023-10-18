@@ -5,7 +5,7 @@
  * @sh_info: structure containing potential arguments
  * Return: Always 0 (Succes)
  */
-int prtenv(sh_info_t *sh_info)
+int prtenv(siginfo_t *sh_info)
 {
 	str_print(sh_info->env);
 	return (0);
@@ -17,7 +17,7 @@ int prtenv(sh_info_t *sh_info)
  * @name: env var name
  * Return: value
  */
-char *env_var(sh_info_t *sh_info, const char *name)
+char *env_var(siginfo_t *sh_info, const char *name)
 {
 	list_t *node = sh_info->env;
 	char *a;
@@ -38,7 +38,7 @@ char *env_var(sh_info_t *sh_info, const char *name)
  * @sh_info: The structure containing potential arguments
  * Return: Always 0 (Success)
  */
-int init_env(sh_info_t *sh_info)
+int init_env(siginfo_t *sh_info)
 {
 	if (sh_info->argc != 3)
 	{
@@ -55,7 +55,7 @@ int init_env(sh_info_t *sh_info)
  * @sh_info: structure containing potential arguments
  * Return: Always 0
  */
-int rem_env(sh_info_t *sh_info)
+int rem_env(siginfo_t *sh_info)
 {
 	int a = 1;
 
@@ -67,7 +67,7 @@ int rem_env(sh_info_t *sh_info)
 
 	while (sh_info->argv[a] != NULL)
 	{
-	rem_venv(sh_info, sh_info->argv[a]);
+	rem_env(sh_info, sh_info->argv[a]);
 	a++;
 	}
 
@@ -79,9 +79,9 @@ int rem_env(sh_info_t *sh_info)
  * @sh_info: structure containing potential arguments
  * Return: Always 0
  */
-int envpop(sh_info_t *sh_info)
+int envpop(siginfo_t *sh_info)
 {
-	sh_list_t *node = NULL;
+	struct *node = NULL;
 	size_t l = 0;
 
 	while (environ[l] != NULL)

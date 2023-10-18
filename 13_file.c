@@ -6,7 +6,7 @@
  * Return: allocated string containg history file
  */
 
-char *file_hist(sh_info_t *sh_info)
+char *file_hist(siginfo_t *sh_info)
 {
 	char *buff, *d;
 
@@ -28,7 +28,7 @@ char *file_hist(sh_info_t *sh_info)
  * @sh_info:  Parameter struct
  * Return: 1 on success, else -1
  */
-int histfile(sh_info_t *sh_info)
+int histfile(siginfo_t *sh_info)
 {
 	ssize_t fd;
 	char *filename = file_hist(sh_info);
@@ -56,7 +56,7 @@ int histfile(sh_info_t *sh_info)
  * @sh_info: Parameter struct
  * Return: the histcount on success, 0 otherwise
  */
-int histread(sh_info_t *sh_info)
+int histread(siginfo_t *sh_info)
 {
 	int a, b = 0, linecount = 0;
 	ssize_t fd, rdlen, f = 0;
@@ -106,7 +106,7 @@ int histread(sh_info_t *sh_info)
  * @linecount: history linecount
  * Return: Always 0
  */
-int list_hist(sh_info_t *sh_info, char *buff, int linecount)
+int list_hist(siginfo_t *sh_info, char *buff, int linecount)
 {
 	list_t *node = NULL;
 
@@ -124,7 +124,7 @@ int list_hist(sh_info_t *sh_info, char *buff, int linecount)
  * @sh_info: The tructure containing potential arguments
  * Return: new histcount
  */
-int histnum(sh_info_t *sh_info)
+int histnum(siginfo_t *sh_info)
 {
 	list_t *node = sh_info->node_hist;
 	int h = 0;

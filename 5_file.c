@@ -5,7 +5,7 @@
  * constant function prototype
  * Return: to exit with a given exit status
  */
-int do_exit(sh_info_t *sh_info)
+int do_exit(siginfo_t *sh_info)
 {
 	int checkexit;
 
@@ -32,7 +32,7 @@ int do_exit(sh_info_t *sh_info)
  * constant function prototype
  * Return: Always 0
  */
-int change_dir(sh_info_t *sh_info)
+int change_dir(siginfo_t *sh_info)
 {
 	char *a, *b, buffer[1024];
 	int chd;
@@ -54,10 +54,10 @@ int change_dir(sh_info_t *sh_info)
 		if (!env_var(sh_info, "OLDPWD="))
 		{
 			prints_str(a);
-			printch('\n');
+			eprintch('\n');
 			return (1);
 		}
-		print_str(env_var(sh_info, "OLDPWD=")), printch('\n');
+		print_err(env_var(sh_info, "OLDPWD=")), eprintch('\n');
 		chd =
 			chdir((dir = env_var(sh_info, "OLDPWD=")) ? dir : "/");
 	}
@@ -65,7 +65,7 @@ int change_dir(sh_info_t *sh_info)
 		chd = chdir(sh_info->argv[1]);
 	if (chd == -1)
 	{
-		print_error(sh_info, "can't cd to ");
+		print_err(sh_info, "can't cd to ");
 		prints_string(sh_info->argv[1]), eprintch('\n');
 	}
 	else
@@ -81,14 +81,14 @@ int change_dir(sh_info_t *sh_info)
  * constant function prototype
  * Return: Always 0
  */
-int help_func(sh_info_t *sh_info)
+int help_func(siginfo_t *sh_info)
 {
 	char **arr_arg;
 
 	arr_arg = sh_info->argv;
-	print_str("help call works. Function not yet implemented \n");
+	print_err("help call works. Function not yet implemented \n");
 	if (0)
-		print_str(*arr_arg);
+		print_err(*arr_arg);
 	return (0);
 }
 
@@ -99,7 +99,7 @@ int help_func(sh_info_t *sh_info)
  * constant function prototype
  * Return: Always 0
  */
-int disp_hist(sh_info_t *sh_info)
+int disp_hist(siginfo_t *sh_info)
 {
 	elem_list(sh_info->node_hist);
 	return (0);

@@ -1,4 +1,4 @@
-include "main.h"
+#include "main.h"
 
 /**
  * alias_string - to set alias to string
@@ -6,7 +6,7 @@ include "main.h"
  * @s: string alias
  * Return: Always 0 on success, 1 on error
  */
-int alias_string(sh_info_t *sh_info, char *s)
+int alias_string(siginfo_t *sh_info, char *s)
 {
 	char *a, b;
 	int r;
@@ -36,7 +36,7 @@ int alias_set(sh_info_t *sh_info, char *s)
 	if (!a)
 		return (1);
 	if (!*++a)
-		return (alias_reset(sh_info, s));
+		return (alias_reset(siginfo, s));
 
 	alias_reset(sh_info, s);
 	return (node_add(&(sh_info->sh_alias), s, 0) == NULL);
@@ -47,7 +47,7 @@ int alias_set(sh_info_t *sh_info, char *s)
  * @sh_info: struct parameter
  * Return: 1 if success, 0 otherwise
  */
-int alias_rp(sh_info_t *sh_info)
+int alias_rp(siginfo_t *sh_info)
 {
 	int a = 0;
 	sh_list_t *node;
@@ -104,7 +104,7 @@ int alias_prt(sh_list_t *node)
  * @sh_info: structure containing potential arguments
  * Return: Always 0(success)
  */
-int get_alias(sh_info_t *sh_info)
+int get_alias(siginfo_t *sh_info)
 {
 	int i;
 	char *a = NULL;
@@ -112,20 +112,20 @@ int get_alias(sh_info_t *sh_info)
 
 	if (sh_info->argc == 1)
 	{
-		for (node = sh_info->sh_alias; node; node = node->next)
-		{
-			alias_prt(node);
-		}
-		return (0);
+	for (node = sh_info->sh_alias; node; node = node->next)
+	{
+		alias_prt(node);
+	}
+	return (0);
 	}
 
 	for (i = 1; sh_info->argv[i]; i++)
 	{
-		a = loc_ch(sh_info->argv[i], '=');
-		if (a)
-			alias_set(sh_info, sh_info->argv[i]);
-		else
-			alias_prt(node_start(sh_info->sh_alias, sh_info->argv[i], '='));
+	a = loc_ch(sh_info->argv[i], '=');
+	if (a)
+		alias_set(sh_info, sh_info->argv[i]);
+	else
+		alias_prt(node_start(sh_info->sh_alias, sh_info->argv[i], '='));
 	}
 	return (0);
 }

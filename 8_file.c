@@ -7,7 +7,7 @@
  * @num: node index used by history
  * Return: list size
  */
-sh_list_t *new_node(sh_list_t **head, const char *str, int num)
+struct *new_node(struct **head, const char *str, int num)
 {
 	sh_list_t *first;
 
@@ -48,7 +48,7 @@ sh_list_t *new_node(sh_list_t **head, const char *str, int num)
  * @num: the node index used by history
  * Return: the size of list
  */
-sh_list_t *node_add(sh_list_t **head, const char *str, int num)
+struct *node_add(struct **head, const char *str, int num)
 {
 	list_t *last, *node;
 
@@ -96,8 +96,8 @@ size_t str_print(const sh_list_t *h)
 
 	for (a = 0; h; h = h->next, a++)
 	{
-		print_str(h->str ? h->str : "(nil)");
-		print_str("\n");
+		print_err(h->str ? h->str : "(nil)");
+		print_err(psiginfo,"\n");
 	}
 
 	return (a);
@@ -109,9 +109,9 @@ size_t str_print(const sh_list_t *h)
  * @index: index of node to delete
  * Return: 1 on success, 0 otherwise
  */
-int node_delete(sh_list_t **head, unsigned int index)
+int node_delete(struct sh_list_t **head, unsigned int index)
 {
-	sh_list_t *node, *prev;
+	struct *node, *prev;
 	unsigned int l;
 
 	if (!head || !*head)
@@ -127,7 +127,7 @@ int node_delete(sh_list_t **head, unsigned int index)
 	}
 
 	prev = *head;
-	for (l = 0, nd = (*head)->nxt; nd; l++, prev_nd = nd, nd = nd->nxt)
+	for (l = 0, nd = (*head)->nxt; nd; l++, prev = nd, nd = nd->nxt)
 	{
 	if (l == index)
 		{

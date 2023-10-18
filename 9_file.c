@@ -53,11 +53,11 @@ size_t elem_list(const sh_list_t *h)
 
 	for (; h; h = h->next)
 	{
-		print_str(change_number(h->num, 10, 0));
-		printch(':');
+		print_err(change_number(h->num, 10, 0));
+		eprintch(':');
 		printch(' ');
-		print_str(h->str ? h->str : "(nil)");
-		print_str("\n");
+		print_err(h->str ? h->str : "(nil)");
+		print_err("\n");
 		a++;
 	}
 
@@ -71,14 +71,14 @@ size_t elem_list(const sh_list_t *h)
  * @c: next char after prefix to match
  * Return: to match node or null
  */
-sh_list_t *node_start(sh_list_t *node, char *p, char c)
+struct *node_start(struct *node, char *p, char c)
 {
 	char *pt = NULL;
 
 	while (node)
 	{
-		pt = chk_start(node->str, p);
-		if (pt && ((c == -1) || (*pt == c)))
+		p = chk_start(node->str, p);
+		if (p && ((c == -1) || (*pt == c)))
 			return (node);
 		node = node->next;
 	}

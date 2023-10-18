@@ -30,14 +30,14 @@ int chk_filetype(*sh_info, char *filepath)
  * @cmd: cmd to find
  * Return: the path of cmd if found, otherwise NULL
  */
-char *chk_cmd(sh_info_t *sh_info, char *p_str, char *cmd)
+char *chk_cmd(siginfo_t *sh_info, char *p_str, char *cmd)
 {
 	int l = 0, p = 0;
 	char *path;
 
 	if (!p_str)
 		return (NULL);
-	if ((len_str(cmd) > 2) && chk_start(cmd, "./"))
+	if ((new_str(cmd) > 2) && chk_start(cmd, "./"))
 	{
 		if (chk_filetype(sh_info, cmd))
 			return (cmd);

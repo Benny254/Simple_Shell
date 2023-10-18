@@ -4,13 +4,12 @@
  * infoclr - initialize sh_info_t struct
  * @sh_info: struct address
  */
-void infoclr(sh_info_t *sh_info)
-{
-	sh_info->arg = NULL;
-	sh_info->path = NULL;
-	sh_info->argv = NULL;
-	sh_info->argc = 0;
-}
+typedef struct {
+	char *arg;
+	char *path;
+	char **argv;
+	int argc;
+} sh_info_t;
 
 /**
  **cppy_str - copy a string
