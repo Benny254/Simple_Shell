@@ -1,3 +1,5 @@
+0x16. C - Simple Shell
+
 - chk_interactive - checks if shell is interactive mode
 - _delim - checks if character is delimeter
 - is_upper - checks  alphabetic character
@@ -91,3 +93,7 @@
 - chainchk - check if we should continue chaining based on last status
 - vars_rp - replace vars in the tokenized string
 
+- _shell - the main shell loop
+- builtincmd - find a builtin command
+- cmd_find - find a command in PATH
+- run_cmd - fork an exec thread to run cmd

@@ -105,6 +105,11 @@ int testchain(sh_info_t *shinfo, char *buff, size_t *p);
 void chainchk(sh_info_t *sh_info, char *buff, size_t *p, size_t i, size_t l);
 int vars_rp(sh_info_t *sh_info);
 
+int _shell(sh_info_t *sh_info, char **av);
+int builtincmd(sh_info_t *sh_info);
+void cmd_find(sh_info_t *sh_info);
+void run_cmd(sh_info_t *sh_info);
+
 
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
