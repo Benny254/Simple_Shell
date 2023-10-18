@@ -34,14 +34,21 @@ int string_convert(char *str)
  * @s: the string containing error type
  * Return: to converted number otherwise, -1 on error
  */
-void print_err(sh_info_t *sh_info, char *s)
+void print_err(siginfo_t *sh_info, char *s)
 {
+	if (sh_info != NULL)
+	{
+	// Assuming fname is not a valid member, use the correct member for file name
 	prints_string(sh_info->fname);
 	prints_string(": ");
 	dec_print(sh_info->line_count, STDERR_FILENO);
 	prints_string(": ");
-	prints_string(sh_info->argv[0]);
-	prints_string(": ");
+	if (sh_info->argv != NULL && sh_info->argv[0] != NULL)
+		{
+		prints_string(sh_info->argv[0]);
+		prints_string(": ");
+		}
+	}
 	prints_string(s);
 }
 
@@ -71,7 +78,7 @@ void prints_string(char *s)
  */
 int dec_print(int in, int fd)
 {
-	int (*_printch)(char) = printch;
+	int (*_printch)(char) = _printch;
 	int l, c = 0;
 	unsigned int _abs_, b;
 

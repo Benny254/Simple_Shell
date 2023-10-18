@@ -1,11 +1,14 @@
 #include "main.h"
+#define CONVERT_UNSIGNED 1
+#define CONVERT_LOWERCASE 1
 
 /**
- * chk_interactive - to check if shell is interactive mode
- * @sh_info: struct
- * Return: 1 if true, 0 otherwise
+ * chk_interactive - Check if shell is in interactive mode.
+ * @sh_info: Pointer to the siginfo_t structure.
+ *
+ * Return: 1 if true, 0 otherwise.
  */
-int chk_interactive(sh_info_t *sh_info)
+int chk_interactive(siginfo_t *sh_info)
 {
 	return (isatty(STDIN_FILENO) && sh_info->fdinput <= 2);
 }
@@ -74,7 +77,7 @@ int convert_string(char *str)
  * @n: the given number
  * @b: the number system in which a given number is represented
  * @f: the flags
- * Return: a string
+ * Return: a stri
  */
 char *change_number(long int n, int b, int f)
 {
