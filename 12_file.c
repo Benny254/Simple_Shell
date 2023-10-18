@@ -3,12 +3,16 @@
 
 /**
  * buf_input - to buffers chained commands
- * @sh_info: parameter struct
+ * @info: parameter struct
  * @buff: an address of buffer
  * @len: an address of len var
  * Return: the bytes read
  */
+<<<<<<< HEAD
 ssize_t buf_input(siginfo_t *sh_info, char **buff, size_t *len)
+=======
+ssize_t buf_input(info_t *info, char **buff, size_t *len)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	ssize_t a = 0;
 	size_t p = 0;
@@ -21,7 +25,7 @@ ssize_t buf_input(siginfo_t *sh_info, char **buff, size_t *len)
 #if USE_GETLINE
 		a = getline(buff, &p, stdin);
 #else
-		a = _getline(sh_info, buff, &p);
+		a = _getline(info, buff, &p);
 #endif
 		if (a > 0)
 		{
@@ -30,12 +34,12 @@ ssize_t buf_input(siginfo_t *sh_info, char **buff, size_t *len)
 				(*buff)[a - 1] = '\0';
 				t--;
 			}
-			sh_info->linecount_flag = 1;
+			info->linecount_flag = 1;
 			remove_comments(*buff);
-			list_hist(sh_info, *buff, sh_info->histcount++);
+			list_hist(info, *buff, info->histcount++);
 			{
 				*len = a;
-				sh_info->cmd_buf = buff;
+				info->cmd_buf = buff;
 			}
 		}
 	}
@@ -44,18 +48,22 @@ ssize_t buf_input(siginfo_t *sh_info, char **buff, size_t *len)
 
 /**
  * type_in - get a line minus the newline
- * @sh_info: the parameter struct
+ * @info: the parameter struct
  * Return: the bytes read
  */
+<<<<<<< HEAD
 ssize_t type_in(siginfo_t *sh_info)
+=======
+ssize_t type_in(info_t *info)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	static char *buff;
 	static size_t a, b, l;
 	ssize_t r = 0;
-	char **buf_p = &(sh_info->arg), *p;
+	char **buf_p = &(info->arg), *p;
 
 	printch(BUF_FLUSH);
-	r = buf_input(sh_info, &buff, &l);
+	r = buf_input(info, &buff, &l);
 	if (r == -1) /* EOF */
 	return (-1);
 	if (l)
@@ -63,10 +71,10 @@ ssize_t type_in(siginfo_t *sh_info)
 	b = a;
 	p = buff + a;
 
-	chainchk(sh_info, buff, &b, a, l);
+	chainchk(info, buff, &b, a, l);
 	for (; b < l; b++)
 	{
-		if (testchain(sh_info, buff, &b))
+		if (testchain(info, buff, &b))
 		break;
 	}
 
@@ -74,7 +82,7 @@ ssize_t type_in(siginfo_t *sh_info)
 	if (a >= l)
 	{
 		a = l = 0;
-		sh_info->cmd_buf_type = CMD_NORM;
+		info->cmd_buf_type = CMD_NORM;
 	}
 
 	*buf_p = p;
@@ -87,18 +95,22 @@ ssize_t type_in(siginfo_t *sh_info)
 
 /**
  * bufread - read a buffer
- * @sh_info: the parameter struct
+ * @info: the parameter struct
  * @buff: a buffer
  * @s: the size
  * Return: l
  */
+<<<<<<< HEAD
 ssize_t bufread(siginfo_t *sh_info, char *buff, size_t *s)
+=======
+ssize_t bufread(info_t *info, char *buff, size_t *s)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	ssize_t l = 0;
 
 	if (*s)
 		return (0);
-	j = read(sh_info->readfd, buff, READ_BUF_SIZE);
+	j = read(info->readfd, buff, READ_BUF_SIZE);
 	if (l >= 0)
 		*s = l;
 	return (l);
@@ -106,12 +118,16 @@ ssize_t bufread(siginfo_t *sh_info, char *buff, size_t *s)
 
 /**
  * nextline - get the next line of an input from STDIN
- * @sh_info: parameter struct
+ * @info: parameter struct
  * @ptr: an address of a pointer to buffer
  * @length: the size of preallocated ptr buffer
  * Return: s
  */
+<<<<<<< HEAD
 int nextline(siginfo_t *sh_info, char **ptr, size_t *length)
+=======
+int nextline(info_t *info, char **ptr, size_t *length)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	static char buff[READ_BUF_SIZE];
 	static size_t a, len;
@@ -125,7 +141,7 @@ int nextline(siginfo_t *sh_info, char **ptr, size_t *length)
 	if (a == len)
 		a = len = 0;
 
-	r = read_buf(sh_info, buff, &len);
+	r = read_buf(info, buff, &len);
 	if (r == -1 || (r == 0 && len == 0))
 		return (-1);
 

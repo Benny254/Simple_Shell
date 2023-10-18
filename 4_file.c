@@ -3,15 +3,15 @@
 /**
  * chk_filetype - the function checks whether file
  * specified is regular file
- * @sh_info: an info struct
+ * @info: an info struct
  * @filepath: the path to file
  * Return: 1 if true, 0 otherwise
  */
-int chk_filetype(*sh_info, char *filepath)
+int chk_filetype(*info, char *filepath)
 {
 	struct stat var;
 
-	(void)sh_info;
+	(void)info;
 	if (!filepath || stat(filepath, &var))
 		return (0);
 
@@ -25,12 +25,16 @@ int chk_filetype(*sh_info, char *filepath)
 /**
  * chk_cmd - to manage PATH environment variable and finds commands
  * executable within specified paths
- * @sh_info: an info struct
+ * @info: an info struct
  * @p_str: the PATH string
  * @cmd: cmd to find
  * Return: the path of cmd if found, otherwise NULL
  */
+<<<<<<< HEAD
 char *chk_cmd(siginfo_t *sh_info, char *p_str, char *cmd)
+=======
+char *chk_cmd(info_t *info, char *p_str, char *cmd)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	int l = 0, p = 0;
 	char *path;
@@ -39,7 +43,7 @@ char *chk_cmd(siginfo_t *sh_info, char *p_str, char *cmd)
 		return (NULL);
 	if ((new_str(cmd) > 2) && chk_start(cmd, "./"))
 	{
-		if (chk_filetype(sh_info, cmd))
+		if (chk_filetype(info, cmd))
 			return (cmd);
 	}
 	while (1)
@@ -54,7 +58,7 @@ char *chk_cmd(siginfo_t *sh_info, char *p_str, char *cmd)
 				cat_str(path, "/");
 				cat_str(path, cmd);
 			}
-			if (chk_filetype(sh_info, path))
+			if (chk_filetype(info, path))
 				return (path);
 			if (!p_str[l])
 				break;

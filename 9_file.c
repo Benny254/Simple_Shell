@@ -5,9 +5,9 @@
  * @head: pointer to first node
  * Return: array of strings
  */
-char **str_array(sh_list_t *head)
+char **str_array(list_t *head)
 {
-	sh_list_t *node = head;
+	list_t *node = head;
 	size_t a = len_list(head), b;
 	char **strs;
 	char *str;
@@ -47,7 +47,7 @@ char **str_array(sh_list_t *head)
  * @h: pointer to first node
  * Return: the size of list
  */
-size_t elem_list(const sh_list_t *h)
+size_t elem_list(const list_t *h)
 {
 	size_t a = 0;
 
@@ -71,7 +71,11 @@ size_t elem_list(const sh_list_t *h)
  * @c: next char after prefix to match
  * Return: to match node or null
  */
+<<<<<<< HEAD
 struct *node_start(struct *node, char *p, char c)
+=======
+sh_list_t *node_start(list_t *node, char *p, char c)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	char *pt = NULL;
 
@@ -91,7 +95,7 @@ struct *node_start(struct *node, char *p, char c)
  * @node: the pointer to the node
  * Return: an index of node or -1
  */
-ssize_t node_get(sh_list_t *h, list_t *node)
+ssize_t node_get(list_t *h, list_t *node)
 {
 	size_t l;
 
@@ -109,7 +113,7 @@ ssize_t node_get(sh_list_t *h, list_t *node)
  * @h: pointer to first node
  * Return: size of list
  */
-size_t len_list(const sh_list_t *h)
+size_t len_list(const list_t *h)
 {
 	size_t a = 0;
 
