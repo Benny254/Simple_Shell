@@ -6,7 +6,11 @@
  * @s: string alias
  * Return: Always 0 on success, 1 on error
  */
+<<<<<<< HEAD
+int alias_string(siginfo_t *sh_info, char *s)
+=======
 int alias_string(info_t *info, char *s)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	char *a, b;
 	int r;
@@ -36,7 +40,11 @@ int alias_set(info_t *info, char *s)
 	if (!a)
 		return (1);
 	if (!*++a)
+<<<<<<< HEAD
+		return (alias_reset(siginfo, s));
+=======
 		return (alias_reset(info, s));
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 
 	alias_reset(info, s);
 	return (node_add(&(info->alias), s, 0) == NULL);
@@ -47,7 +55,11 @@ int alias_set(info_t *info, char *s)
  * @info: struct parameter
  * Return: 1 if success, 0 otherwise
  */
+<<<<<<< HEAD
+int alias_rp(siginfo_t *sh_info)
+=======
 int alias_rp(info_t *info)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	int a = 0;
 	list_t *node;
@@ -104,7 +116,11 @@ int alias_prt(list_t *node)
  * @info: structure containing potential arguments
  * Return: Always 0(success)
  */
+<<<<<<< HEAD
+int get_alias(siginfo_t *sh_info)
+=======
 int get_alias(info_t *info)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	int i;
 	char *a = NULL;
@@ -112,20 +128,36 @@ int get_alias(info_t *info)
 
 	if (info->argc == 1)
 	{
+<<<<<<< HEAD
+	for (node = sh_info->sh_alias; node; node = node->next)
+	{
+		alias_prt(node);
+	}
+	return (0);
+=======
 		for (node = info->alias; node; node = node->next)
 		{
 			alias_prt(node);
 		}
 		return (0);
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 	}
 
 	for (i = 1; info->argv[i]; i++)
 	{
+<<<<<<< HEAD
+	a = loc_ch(sh_info->argv[i], '=');
+	if (a)
+		alias_set(sh_info, sh_info->argv[i]);
+	else
+		alias_prt(node_start(sh_info->sh_alias, sh_info->argv[i], '='));
+=======
 		a = loc_ch(info->argv[i], '=');
 		if (a)
 			alias_set(info, info->argv[i]);
 		else
 			alias_prt(node_start(info->alias, info->argv[i], '='));
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 	}
 	return (0);
 }

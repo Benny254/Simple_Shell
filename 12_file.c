@@ -1,4 +1,5 @@
 #include "main.h"
+#define BUF_FLUSH
 
 /**
  * buf_input - to buffers chained commands
@@ -7,7 +8,11 @@
  * @len: an address of len var
  * Return: the bytes read
  */
+<<<<<<< HEAD
+ssize_t buf_input(siginfo_t *sh_info, char **buff, size_t *len)
+=======
 ssize_t buf_input(info_t *info, char **buff, size_t *len)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	ssize_t a = 0;
 	size_t p = 0;
@@ -46,7 +51,11 @@ ssize_t buf_input(info_t *info, char **buff, size_t *len)
  * @info: the parameter struct
  * Return: the bytes read
  */
+<<<<<<< HEAD
+ssize_t type_in(siginfo_t *sh_info)
+=======
 ssize_t type_in(info_t *info)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	static char *buff;
 	static size_t a, b, l;
@@ -91,7 +100,11 @@ ssize_t type_in(info_t *info)
  * @s: the size
  * Return: l
  */
+<<<<<<< HEAD
+ssize_t bufread(siginfo_t *sh_info, char *buff, size_t *s)
+=======
 ssize_t bufread(info_t *info, char *buff, size_t *s)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	ssize_t l = 0;
 
@@ -110,7 +123,11 @@ ssize_t bufread(info_t *info, char *buff, size_t *s)
  * @length: the size of preallocated ptr buffer
  * Return: s
  */
+<<<<<<< HEAD
+int nextline(siginfo_t *sh_info, char **ptr, size_t *length)
+=======
 int nextline(info_t *info, char **ptr, size_t *length)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	static char buff[READ_BUF_SIZE];
 	static size_t a, len;
@@ -130,12 +147,12 @@ int nextline(info_t *info, char **ptr, size_t *length)
 
 	c = loc_ch(buff + a, '\n');
 	l = c ? 1 + (unsigned int)(c - buff) : len;
-	p2 = _realloc(p, s, s ? s + l : l + 1);
+	p2 = realloc(p, s, s ? s + l : l + 1);
 	if (!p2)
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		concat_str(p2, buff + a, l - a);
+		confstr(p2, buff + a, l - a);
 	else
 		cppy_str(p2, buff + a, l - a + 1);
 
@@ -156,7 +173,7 @@ int nextline(info_t *info, char **ptr, size_t *length)
  */
 void handlec(__attribute__((unused))int s)
 {
-	print_str("\n");
-	print_str("$ ");
+	print_err("\n");
+	print_err("$ ");
 	printch(BUF_FLUSH);
 }

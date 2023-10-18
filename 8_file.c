@@ -7,7 +7,11 @@
  * @num: node index used by history
  * Return: list size
  */
+<<<<<<< HEAD
+struct *new_node(struct **head, const char *str, int num)
+=======
 list_t *new_node(list_t **head, const char *str, int num)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	list_t *first;
 
@@ -48,7 +52,11 @@ list_t *new_node(list_t **head, const char *str, int num)
  * @num: the node index used by history
  * Return: the size of list
  */
+<<<<<<< HEAD
+struct *node_add(struct **head, const char *str, int num)
+=======
 list_t *node_add(list_t **head, const char *str, int num)
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 {
 	list_t *last, *node;
 
@@ -96,8 +104,8 @@ size_t str_print(const list_t *h)
 
 	for (a = 0; h; h = h->next, a++)
 	{
-		print_str(h->str ? h->str : "(nil)");
-		print_str("\n");
+		print_err(h->str ? h->str : "(nil)");
+		print_err(psiginfo,"\n");
 	}
 
 	return (a);
@@ -109,9 +117,15 @@ size_t str_print(const list_t *h)
  * @index: index of node to delete
  * Return: 1 on success, 0 otherwise
  */
+<<<<<<< HEAD
+int node_delete(struct sh_list_t **head, unsigned int index)
+{
+	struct *node, *prev;
+=======
 int node_delete(list_t **head, unsigned int index)
 {
 	list_t *node, *prev;
+>>>>>>> 2de96c1583c9be762dc66e70a301f0fb0556db5d
 	unsigned int l;
 
 	if (!head || !*head)
@@ -127,7 +141,7 @@ int node_delete(list_t **head, unsigned int index)
 	}
 
 	prev = *head;
-	for (l = 0, nd = (*head)->nxt; nd; l++, prev_nd = nd, nd = nd->nxt)
+	for (l = 0, nd = (*head)->nxt; nd; l++, prev = nd, nd = nd->nxt)
 	{
 	if (l == index)
 		{
