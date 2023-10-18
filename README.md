@@ -76,4 +76,18 @@
 - list_hist - add entry to a history linked list
 - histnum - renumber the history linked list after changes
 
+- envstr - return the string array copy of our environ
+- rem_venv - remove an environment variable
+- init_evar - to initialize a new environment variable
+- int_info - initialize sh_info_t struct
+- infofr - free sh_info_t struct fields
+
+- infoclr - initialize sh_info_t struct
+- cppy_str - copy a string
+- concat_str - concate two strings
+- loc_ch - locate a character in a string
+
+- testchain - to test if current character in buffer is a chain delimeter
+- chainchk - check if we should continue chaining based on last status
+- vars_rp - replace vars in the tokenized string
 

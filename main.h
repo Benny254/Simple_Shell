@@ -90,6 +90,22 @@ int histread(sh_info_t *sh_info);
 int list_hist(sh_info_t *sh_info, char *buff, int linecount);
 int histnum(sh_info_t *sh_info);
 
+char **envstr(sh_info_t *sh_info);
+int rem_venv(sh_info_t *sh_info, char *v);
+int init_evar(sh_info_t *sh_info, char *v, char *value);
+void int_info(sh_info_t *sh_info, char **v);
+void infofr(sh_info_t *sh_info, int f);
+
+void infoclr(sh_info_t *sh_info);
+char *cppy_str(char *dest, char *src, int ch);
+char *concat_str(char *dest, char *src, int by);
+char *_strchr(char *s, char ch);
+
+int testchain(sh_info_t *shinfo, char *buff, size_t *p);
+void chainchk(sh_info_t *sh_info, char *buff, size_t *p, size_t i, size_t l);
+int vars_rp(sh_info_t *sh_info);
+
+
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
