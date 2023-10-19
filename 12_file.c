@@ -151,11 +151,11 @@ int nextline(info_t *info, char **ptr, size_t *length)
 }
 
 /**
- * handlec - the block ctrl-C
+ * sigintHandler - the block ctrl-C
  * @sig_num: signal number
  * Return: the void
  */
-void handlec(__attribute__((unused))int sig_num)
+void sigintHandler(__attribute__((unused))int sig_num)
 {
 	print_str("\n");
 	print_str("$ ");
