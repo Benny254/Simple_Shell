@@ -20,13 +20,13 @@ int prtenv(info_t *info)
 char *env_var(info_t *info, const char *name)
 {
 	list_t *node = info->env;
-	char *a;
+	char *p;
 
 	while (node)
 	{
-		a = chk_start(node->str, name);
-		if (a && *a)
-			return (a);
+		p = chk_start(node->str, name);
+		if (p && *p)
+			return (p);
 		node = node->next;
 	}
 	return (NULL);
@@ -57,19 +57,15 @@ int init_env(info_t *info)
  */
 int rem_env(info_t *info)
 {
-	int a = 1;
+	int i;
 
 	if (info->argc == 1)
 	{
-	prints_string("Too few arguments.\n");
-	return (1);
+		prints_string("Too few arguements.\n");
+		return (1);
 	}
-
-	while (info->argv[a] != NULL)
-	{
-	rem_venv(info, info->argv[a]);
-	a++;
-	}
+	for (i = 1; i <= info->argc; i++)
+		rem_venv(info, info->argv[i]);
 
 	return (0);
 }
@@ -82,14 +78,10 @@ int rem_env(info_t *info)
 int envpop(info_t *info)
 {
 	list_t *node = NULL;
-	size_t l = 0;
+	size_t i;
 
-	while (environ[l] != NULL)
-	{
-		node_add(&node, environ[l], 0);
-	l++;
-	}
-
+	for (i = 0; environ[i]; i++)
+		node_add(&node, environ[i], 0);
 	info->env = node;
 	return (0);
 }

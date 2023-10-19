@@ -19,31 +19,30 @@ char **envstr(info_t *info)
 /**
  * rem_venv - remove an environment variable
  * @info: the structure containing potential arguments
- * @v: string env var property
+ * @var: string env var property
  * Return: 1 on delete, 0 otherwise
  */
-int rem_venv(info_t *info, char *v)
+int rem_venv(info_t *info, char *var)
 {
 	list_t *node = info->env;
+	size_t i = 0;
 	char *p;
-	size_t k;
 
-	if (!node || !v)
-	return (0);
+	if (!node || !var)
+		return (0);
 
-	for (k = 0; node; k++)
+	while (node)
 	{
-	p = chk_start(node->str, v);
-	if (p && *p == '=')
-	{
-		info->env_changed = node_delete(&(info->env), k);
-		k = 0;
-		node = info->env;
-	}
-	else
+		p = chk_start(node->str, var);
+		if (p && *p == '=')
 		{
-		node = node->next;
+			info->env_changed = node_delete(&(info->env), i);
+			i = 0;
+			node = info->env;
+			continue;
 		}
+		node = node->next;
+		i++;
 	}
 	return (info->env_changed);
 }
@@ -51,72 +50,70 @@ int rem_venv(info_t *info, char *v)
 /**
  * init_evar - to initialize a new environment variable
  * @info: structure containing potential arguments
- * @v: string env var property
+ * @var: string env var property
  * @value: string env var value
  * Return: Always 0
  */
-int init_evar(info_t *info, char *v, char *value)
+int init_evar(info_t *info, char *var, char *value)
 {
-	char *buff = NULL;
+	char *buf = NULL;
 	list_t *node;
 	char *p;
 
-	if (!v || !value)
-	return (0);
+	if (!var || !value)
+		return (0);
 
-	buff = malloc(len_str(v) + len_str(value) + 2);
-	if (!buff)
-	return (1);
-	cpy_str(buff, v);
-	cat_str(buff, "=");
-	cat_str(buff, value);
+	buf = malloc(len_str(var) + len_str(value) + 2);
+	if (!buf)
+		return (1);
+	cpy_str(buf, var);
+	cat_str(buf, "=");
+	cat_str(buf, value);
 	node = info->env;
-
-	for (; node; node = node->next)
+	while (node)
 	{
-	p = chk_start(node->str, v);
-	if (p && *p == '=')
-	{
-		free(node->str);
-		node->str = buff;
-		info->env_changed = 1;
-		free(buff);
-		return (0);
-	}
+		p = chk_start(node->str, var);
+		if (p && *p == '=')
+		{
+			free(node->str);
+			node->str = buf;
+			info->env_changed = 1;
+			return (0);
 		}
-		node_add(&(info->env), buff, 0);
-		free(buff);
-		info->env_changed = 1;
-		return (0);
+		node = node->next;
+	}
+	node_add(&(info->env), buf, 0);
+	free(buf);
+	info->env_changed = 1;
+	return (0);
 }
 
 /**
- * int_info - initialize sh_info_t struct
+ * int_info - initialize info_t struct
  * @info: the struct address
- * @v: argument vector
+ * @av: argument vector
  */
-void int_info(info_t *info, char **v)
+void int_info(info_t *info, char **av)
 {
-	int a = 0;
+	int i = 0;
 
-	info->fname = v[0];
+	info->fname = av[0];
 	if (info->arg)
 	{
-	info->argv = str_split(info->arg, " \t");
-	if (!info->argv)
-	{
-		info->argv = malloc(sizeof(char *) * 2);
-	if (info->argv)
+		info->argv = str_split(info->arg, " \t");
+		if (!info->argv)
 		{
-		info->argv[0] = dupstr(info->arg);
-		info->argv[1] = NULL;
-		}
-	}
-		a = 0;
-		while (info->argv && info->argv[y])
-		a++;
 
-		sh_info->argc = a;
+			info->argv = malloc(sizeof(char *) * 2);
+			if (info->argv)
+			{
+				info->argv[0] = dupstr(info->arg);
+				info->argv[1] = NULL;
+			}
+		}
+		for (i = 0; info->argv && info->argv[i]; i++)
+			;
+		info->argc = i;
 
 		alias_rp(info);
 		vars_rp(info);
@@ -124,30 +121,30 @@ void int_info(info_t *info, char **v)
 }
 
 /**
- * infofr - free sh_info_t struct fields
+ * infofr - free info_t struct fields
  * @info: struct address
- * @f: true if freeing all fields
+ * @all: true if freeing all fields
  */
-void infofr(info_t *info, int f)
+void infofr(info_t *info, int all)
 {
 	free_str(info->argv);
 	info->argv = NULL;
 	info->path = NULL;
-	if (f)
+	if (all)
 	{
 		if (!info->cmd_buf)
 			free(info->arg);
 		if (info->env)
 			node_free(&(info->env));
-		if (info->node_hist)
-			node_free(&(info->node_hist));
+		if (info->history)
+			node_free(&(info->history));
 		if (info->alias)
 			node_free(&(info->alias));
 		free_str(info->environ);
-		info->environ = NULL;
+			info->environ = NULL;
 		free_p((void **)info->cmd_buf);
-		if (info->fdinput > 2)
-			close(info->fdinput);
+		if (info->readfd > 2)
+			close(info->readfd);
 		printch(BUF_FLUSH);
 	}
 }

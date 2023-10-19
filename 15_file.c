@@ -7,8 +7,8 @@
 void infoclr(info_t *info)
 {
 	info->arg = NULL;
-	info->path = NULL;
 	info->argv = NULL;
+	info->path = NULL;
 	info->argc = 0;
 }
 
@@ -21,70 +21,66 @@ void infoclr(info_t *info)
  */
 char *cppy_str(char *dest, char *src, int ch)
 {
-	int w;
+	int i, j;
 	char *s = dest;
 
-	for (w = 0; src[w] != '\0' && w < ch - 1; w++)
+	i = 0;
+	while (src[i] != '\0' && i < n - 1)
 	{
-	dest[w] = src[w];
+		dest[i] = src[i];
+		i++;
 	}
-	if (w < ch)
+	if (i < n)
 	{
-	int y;
-
-	for (y = w; y < ch; y++)
+		j = i;
+		while (j < n)
 		{
-		dest[y] = '\0';
+			dest[j] = '\0';
+			j++;
 		}
 	}
 	return (s);
 }
 
 /**
- **concat_str - concate two strings
- *@dest: first string
- *@src: second string
- *@by: amount of bytes to be maximally used
- *Return: concatenated string
+ * *concat_str - concate two strings
+ * @dest: first string
+ * @src: second string
+ * @n: amount of bytes to be maximally used
+ * Return: concatenated string
  */
-char *concat_str(char *dest, char *src, int by)
+char *concat_str(char *dest, char *src, int n)
 {
-	int a, b;
+	int i, j;
 	char *s = dest;
 
-	for (a = 0; dest[a] != '\0'; a++)
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0')
+		i++;
+	while (src[j] != '\0' && j < n)
 	{
+		dest[i] = src[j];
+		i++;
+		j++;
 	}
-
-	for (b = 0; src[b] != '\0' && b < by; b++)
-	{
-		dest[a] = src[b];
-		a++;
-	}
-
-	if (b < by)
-	{
-		dest[a] = '\0';
-	}
-
+	if (j < n)
+		dest[i] = '\0';
 	return (s);
 }
 
 /**
  **loc_ch - locate a character in a string
  *@s: a string to be parsed
- *@ch: the char to look for
+ *@c: the char to look for
  *Return: (s)
  */
-char *loc_ch(char *s, char ch)
+char *loc_ch(char *s, char c)
 {
-	for (; *s != '\0'; s++)
-	{
-		if (*s == ch)
-		{
+	do {
+		if (*s == c)
 			return (s);
-		}
-	}
+	} while (*s++ != '\0');
 
 	return (NULL);
 }

@@ -9,36 +9,27 @@
  */
 list_t *new_node(list_t **head, const char *str, int num)
 {
-	list_t *first;
+	list_t *new_head;
 
 	if (!head)
 		return (NULL);
-
-	first = malloc(sizeof(list_t));
-	if (!first)
-	return (NULL);
-
-	bytemem((void *)first, 0, sizeof(list_t));
-	first->num = num;
-
+	new_head = malloc(sizeof(list_t));
+	if (!new_head)
+		return (NULL);
+	bytemem((void *)new_head, 0, sizeof(list_t));
+	new_head->num = num;
 	if (str)
 	{
-	first->str = dupstr(str);
-	if (!first->str)
+		new_head->str = dupstr(str);
+		if (!new_head->str)
 		{
-		free(first);
+			free(new_head);
 			return (NULL);
 		}
 	}
-	else
-	{
-		first->str = NULL;
-	}
-
-	first->next = *head;
-	*head = first;
-
-	return (first);
+	new_head->next = *head;
+	*head = new_head;
+	return (new_head);
 }
 
 /**
@@ -50,57 +41,54 @@ list_t *new_node(list_t **head, const char *str, int num)
  */
 list_t *node_add(list_t **head, const char *str, int num)
 {
-	list_t *last, *node;
+	list_t *new_node, *node;
 
 	if (!head)
 		return (NULL);
 
 	node = *head;
-	last = malloc(sizeof(list_t));
-	if (!last)
+	new_node = malloc(sizeof(list_t));
+	if (!new_node)
 		return (NULL);
-
-	bytemem((void *)last, 0, sizeof(list_t));
-	last->num = num;
-
+	bytemem((void *)new_node, 0, sizeof(list_t));
+	new_node->num = num;
 	if (str)
 	{
-	last->str = dupstr(str);
-	if (!last->str)
-	{
-		free(last);
+		new_node->str = dupstr(str);
+		if (!new_node->str)
+		{
+			free(new_node);
 			return (NULL);
-	}
+		}
 	}
 	if (node)
 	{
-	for (; node->next; node = node->next)
-		node->next = last;
+		while (node->next)
+			node = node->next;
+		node->next = new_node;
 	}
 	else
-	{
-		*head = last;
-	}
-
-	return (last);
+		*head = new_node;
+	return (new_node);
 }
 
 /**
  * str_print - print only the str element of a list_t linked list
  * @h: the pointer to first node
- * Return: the size of list
+ * Return: size of list
  */
 size_t str_print(const list_t *h)
 {
-	size_t a;
+	size_t i = 0;
 
-	for (a = 0; h; h = h->next, a++)
+	while (h)
 	{
-		print_err(h->str ? h->str : "(nil)");
-		print_err(psiginfo,"\n");
+		print_str(h->str ? h->str : "(nil)");
+		print_str("\n");
+		h = h->next;
+		i++;
 	}
-
-	return (a);
+	return (i);
 }
 
 /**
@@ -111,11 +99,11 @@ size_t str_print(const list_t *h)
  */
 int node_delete(list_t **head, unsigned int index)
 {
-	list_t *node, *prev;
-	unsigned int l;
+	list_t *node, *prev_node;
+	unsigned int i = 0;
 
 	if (!head || !*head)
-	return (0);
+		return (0);
 
 	if (!index)
 	{
@@ -125,43 +113,42 @@ int node_delete(list_t **head, unsigned int index)
 		free(node);
 		return (1);
 	}
-
-	prev = *head;
-	for (l = 0, nd = (*head)->nxt; nd; l++, prev = nd, nd = nd->nxt)
+	node = *head;
+	while (node)
 	{
-	if (l == index)
+		if (i == index)
 		{
-		prev->next = node->next;
-		free(node->str);
-		free(node);
+			prev_node->next = node->next;
+			free(node->str);
+			free(node);
 			return (1);
 		}
+		i++;
+		prev_node = node;
+		node = node->next;
 	}
-
 	return (0);
 }
 
 /**
  * node_free - free all nodes of a list
- * @h_ptr: an address of pointer to head node
+ * @head_ptr: an address of pointer to head node
  * Return: void
  */
-void node_free(list_t **h_ptr)
+void node_free(list_t **head_ptr)
 {
 	list_t *node, *next_node, *head;
 
-	if (!h_ptr || !*h_ptr)
-	return;
-
-	head = *h_ptr;
+	if (!head_ptr || !*head_ptr)
+		return;
+	head = *head_ptr;
 	node = head;
-
-	for (; node; node = next_node)
+	while (node)
 	{
 		next_node = node->next;
 		free(node->str);
 		free(node);
+		node = next_node;
 	}
-
-	*h_ptr = NULL;
+	*head_ptr = NULL;
 }

@@ -7,19 +7,19 @@
  */
 char *file_hist(info_t *info)
 {
-	char *buff, *d;
+	char *buf, *dir;
 
-	d = env_var(info, "HOME=");
-	if (!d)
+	dir = env_var(info, "HOME=");
+	if (!dir)
 		return (NULL);
-	buff = malloc(sizeof(char) * (len_str(d) + len_str(HIST_FILE) + 2));
-	if (!buff)
+	buf = malloc(sizeof(char) * (len_str(dir) + len_str(HIST_FILE) + 2));
+	if (!buf)
 		return (NULL);
-	buff[0] = 0;
-	cpy_str(buff, d);
-	cat_str(buff, "/");
-	cat_str(buff, HIST_FILE);
-	return (buff);
+	buf[0] = 0;
+	cpy_str(buf, dir);
+	cat_str(buf, "/");
+	cat_str(buf, HIST_FILE);
+	return (buf);
 }
 
 /**
@@ -40,7 +40,7 @@ int histfile(info_t *info)
 	free(filename);
 	if (fd == -1)
 		return (-1);
-	for (node = info->node_hist; node; node = node->next)
+	for (node = info->history; node; node = node->next)
 	{
 		pfd_input(node->str, fd);
 		write_ch('\n', fd);
@@ -57,10 +57,10 @@ int histfile(info_t *info)
  */
 int histread(info_t *info)
 {
-	int a, b = 0, linecount = 0;
-	ssize_t fd, rdlen, f = 0;
+	int i, last = 0, linecount = 0;
+	ssize_t fd, rdlen, fsize = 0;
 	struct stat st;
-	char *buff = NULL, *filename = file_hist(info);
+	char *buf = NULL, *filename = file_hist(info);
 
 	if (!filename)
 		return (0);
@@ -70,30 +70,30 @@ int histread(info_t *info)
 	if (fd == -1)
 		return (0);
 	if (!fstat(fd, &st))
-		f = st.st_size;
+		fsize = st.st_size;
 	if (fsize < 2)
 		return (0);
-	buff = malloc(sizeof(char) * (f + 1));
-	if (!buff)
+	buf = malloc(sizeof(char) * (fsize + 1));
+	if (!buf)
 		return (0);
-	rdlen = read(fd, buff, f);
-	buff[fsize] = 0;
+	rdlen = read(fd, buf, fsize);
+	buf[fsize] = 0;
 	if (rdlen <= 0)
-		return (free(buff), 0);
+		return (free(buf), 0);
 	close(fd);
-	for (a = 0; a < f; a++)
-		if (buff[i] == '\n')
+	for (i = 0; i < fsize; i++)
+		if (buf[i] == '\n')
 		{
-			buff[a] = 0;
-			list_hist(info, buff + b, linecount++);
-			b = a + 1;
+			buf[i] = 0;
+			list_hist(info, buf + last, linecount++);
+			last = i + 1;
 		}
-	if (b != a)
-		list_hist(info, buff + b, linecount++);
-	free(buff);
+	if (last != i)
+		list_hist(info, buf + last, linecount++);
+	free(buf);
 	info->histcount = linecount;
 	while (info->histcount-- >= HIST_MAX)
-		node_delete(&(info->node_hist), 0);
+		node_delete(&(info->history), 0);
 	histnum(info);
 	return (info->histcount);
 }
@@ -101,20 +101,20 @@ int histread(info_t *info)
 /**
  * list_hist - add entry to a history linked list
  * @info: structure containing potential arguments
- * @buff: a buffer
+ * @buf: a buffer
  * @linecount: history linecount
  * Return: Always 0
  */
-int list_hist(info_t *info, char *buff, int linecount)
+int list_hist(info_t *info, char *buf, int linecount)
 {
 	list_t *node = NULL;
 
-	if (info->node_hist)
-		node = info->node_hist;
-	node_add(&node, buff, linecount);
+	if (info->history)
+		node = info->history;
+	node_add(&node, buf, linecount);
 
-	if (!info->node_hist)
-		info->node_hist = node;
+	if (!info->history)
+		info->history = node;
 	return (0);
 }
 
@@ -125,13 +125,13 @@ int list_hist(info_t *info, char *buff, int linecount)
  */
 int histnum(info_t *info)
 {
-	list_t *node = info->node_hist;
-	int h = 0;
+	list_t *node = info->history;
+	int i = 0;
 
 	while (node)
 	{
-		node->num = h++;
+		node->num = i++;
 		node = node->next;
 	}
-	return (info->histcount = h);
+	return (info->histcount = i);
 }

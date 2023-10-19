@@ -1,4 +1,4 @@
-#include "main.h"i
+#include "main.h"
 
 /**
  * chk_interactive - to check if shell is interactive mode
@@ -7,31 +7,31 @@
  */
 int chk_interactive(info_t *info)
 {
-	return (isatty(STDIN_FILENO) && info->fdinput <= 2);
+	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
 /**
- * _delim - to check if character is delimeter
- * @ch: the given character
- * @d: Delimeter string
+ * delimch - to check if character is delimeter
+ * @c: the given character
+ * @delim: Delimeter string
  * Return: 1 if true, 0 otherwise
  */
-int _delim(char ch, char *d)
+int delimch(char c, char *delim)
 {
-	while (*d)
-		if (*d++ == ch)
+	while (*delim)
+		if (*delim++ == c)
 			return (1);
 	return (0);
 }
 
 /**
  * is_upper - to check  alphabetic character
- * @ch: the given character
+ * @c: the given character
  * Return: 1 if true, 0 otherwise
  */
-int is_upper(int ch)
+int is_upper(int c)
 {
-	if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
 	else
 		return (0);
@@ -39,67 +39,67 @@ int is_upper(int ch)
 
 /**
  * convert_string - to convert string to integer
- * @str: the given string
- * Return:the  converted string
+ * @s: the given string
+ * Return: converted string
  */
-int convert_string(char *str)
+int convert_string(char *s)
 {
-	int l, s = 1, f = 0, n;
-	unsigned int out = 0;
+	int i, sign = 1, flag = 0, output;
+	unsigned int result = 0;
 
-	for (l = 0; (str[l] != '\0' && f != 2); l++)
+	for (i = 0; (s[i] != '\0' && flag != 2); i++)
 	{
-		if (str[l] == '-')
-			s *= -1;
-		if (str[l] >= '0' && str[l] <= '9')
+		if (s[i] == '-')
+			sign *= -1;
+		if (s[i] >= '0' && s[i] <= '9')
 		{
-			f = 1;
-			out *= 10;
-			out += (str[l] - '0');
+			flag = 1;
+			result *= 10;
+			result += (s[i] - '0');
 		}
-		else if (f == 1)
-			f = 2;
+		else if (flag == 1)
+			flag = 2;
 	}
-	if (s == -1)
-		n = -out;
+	if (sign == -1)
+		output = -result;
 	else
-		n = out;
+		output = result;
 
-	return (n);
+	return (output);
 }
 
 /**
  * change_number - to convert long integer to character array representing
  * number in a given base
- * @n: the given number
- * @b: the number system in which a given number is represented
- * @f: the flags
- * Return: a stri
+ * @num: the given number
+ * @base: the number system in which a given number is represented
+ * @flags: the flags
+ * Return: ptr
  */
-char *change_number(long int n, int b, int f)
+char *change_number(long int num, int base, int flags)
 {
-	static char *a;
-	static char buf[50];
-	char s = 0;
-	char *p;
-	unsigned long number = n;
+	static char *array;
+	static char buffer[50];
+	char sign = 0;
+	char *ptr;
+	unsigned long n = num;
 
-	if (!(f & CONVERT_UNSIGNED) && n < 0)
+	if (!(flags & CONVERT_UNSIGNED) && num < 0)
 	{
-		number = -n;
-		s = '-';
+		n = -num;
+		sign = '-';
+
 	}
+	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	ptr = &buffer[49];
+	*ptr = '\0';
 
-	a = f & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	p = &buf[49];
-	*p = '\0';
+	do	{
+		*--ptr = array[n % base];
+		n /= base;
+	} while (n != 0);
 
-	do {
-		*--p = a[number % b];
-		number /= b;
-	} while (number != 0);
-
-	if (s)
-		*--p = s;
-	return (p);
+	if (sign)
+		*--ptr = sign;
+	return (ptr);
 }

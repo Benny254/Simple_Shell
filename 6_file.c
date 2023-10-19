@@ -1,44 +1,45 @@
 #include "main.h"
 
 /**
- * alias_string - to set alias to string
+ * alias_reset - to set alias to string
  * @info: Parameter Struct
- * @s: string alias
+ * @str: string alias
  * Return: Always 0 on success, 1 on error
  */
-int alias_string(info_t *info, char *s)
+int alias_reset(info_t *info, char *str)
 {
-	char *a, b;
-	int r;
+	char *p, c;
+	int ret;
 
-	a = loc_ch(s, '=');
-	if (!a)
+	p = loc_ch(str, '=');
+	if (!p)
 		return (1);
-	b = *a;
-	*a = 0;
-	r = node_delete(&(info->alias),
-		node_get(info->alias, node_start(info->alias, s, -1)));
-	*a = b;
-	return (r);
+	c = *p;
+	*p = 0;
+	ret = node_delete(&(info->alias),
+		node_get(info->alias, node_start(info->alias, str, -1)));
+	*p = c;
+	return (ret);
 }
 
 /**
  * alias_set - set alias to string
  * @info: Parameter Struct
- * @s: string alias
+ * @str: string alias
  * Return: 0 on success, 1 on error
  */
-int alias_set(info_t *info, char *s)
+int alias_set(info_t *info, char *str)
 {
-	char *a;
+	char *p;
 
-	a = loc_ch(s, '=');
-	if (!a)
+	p = loc_ch(str, '=');
+	if (!p)
 		return (1);
-	if (!*++a)
-		return (alias_reset(info, s));
-	alias_reset(info, s);
-	return (node_add(&(info->alias), s, 0) == NULL);
+	if (!*++p)
+		return (alias_reset(info, str));
+
+	alias_reset(info, str);
+	return (node_add(&(info->alias), str, 0) == NULL);
 }
 
 /**
@@ -48,24 +49,23 @@ int alias_set(info_t *info, char *s)
  */
 int alias_rp(info_t *info)
 {
-	int a = 0;
+	int i;
 	list_t *node;
-	char *b;
+	char *p;
 
-	while (a < 10)
+	for (i = 0; i < 10; i++)
 	{
 		node = node_start(info->alias, info->argv[0], '=');
 		if (!node)
 			return (0);
 		free(info->argv[0]);
-		b = loc_ch(node->str, '=');
-		if (!b)
+		p = loc_ch(node->str, '=');
+		if (!p)
 			return (0);
-		b = dupstr(b + 1);
-		if (!b)
+		p = dupstr(p + 1);
+		if (!p)
 			return (0);
-		info->argv[0] = b;
-		a++;
+		info->argv[0] = p;
 	}
 	return (1);
 }
@@ -77,21 +77,15 @@ int alias_rp(info_t *info)
  */
 int alias_prt(list_t *node)
 {
-	char *a = NULL, *b = NULL;
+	char *p = NULL, *a = NULL;
 
 	if (node)
 	{
-		a = loc_ch(node->str, '=');
-		b = node->str;
-
-		while (b <= a)
-		{
-			printch(*b);
-			b++;
-		}
-
+		p = loc_ch(node->str, '=');
+		for (a = node->str; a <= p; a++)
+			printch(*a);
 		printch('\'');
-		print_str(a + 1);
+		print_str(p + 1);
 		print_str("'\n");
 		return (0);
 	}
@@ -105,26 +99,27 @@ int alias_prt(list_t *node)
  */
 int get_alias(info_t *info)
 {
-	int i;
-	char *a = NULL;
+	int i = 0;
+	char *p = NULL;
 	list_t *node = NULL;
 
 	if (info->argc == 1)
 	{
-		for (node = info->alias; node; node = node->next)
+		node = info->alias;
+		while (node)
 		{
 			alias_prt(node);
+			node = node->next;
 		}
 		return (0);
 	}
-
 	for (i = 1; info->argv[i]; i++)
 	{
-		a = loc_ch(info->argv[i], '=');
-		if (a)
+		p = loc_ch(info->argv[i], '=');
+		if (p)
 			alias_set(info, info->argv[i]);
 		else
-			alias_prt(node_start(info->alias, info->argv[i], '='));
+			alias_prt(node_starts_with(info->alias, info->argv[i], '='));
 	}
 	return (0);
 }

@@ -2,60 +2,62 @@
 
 /**
  * cpy_str - copy a string
- * @d: destination
- * @s: source
+ * @dest: destination
+ * @src: source
  * Return: the pointer to destination
  */
-char *cpy_str(char *dest, const char *src)
+char *cpy_str(char *dest, char *src)
 {
-	int pt;
+	int i = 0;
 
-	for (pt = 0; src[pt]; pt++) {
-	dest[pt] = src[pt];
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
 	}
-	dest[pt] = '\0';
-
-	return dest;
+	dest[i] = 0;
+	return (dest);
 }
 
 /**
  * dupstr - duplicate string
- * @st: string to be duplicated
+ * @str: string to be duplicated
  * Return: pointer to duplicated string
  */
-char *dupstr(const char *st)
+char *dupstr(const char *str)
 {
-	int len = 0;
-	char *pt;
+	int length = 0;
+	char *ret;
 
-	if (st == NULL)
+	if (str == NULL)
 		return (NULL);
-	while (*st++)
-		len++;
-	pt = malloc(sizeof(char) * (len + 1));
-	if (!pt)
+	while (*str++)
+		length++;
+	ret = malloc(sizeof(char) * (length + 1));
+	if (!ret)
 		return (NULL);
-	for (len++; len--;)
-		pt[len] = *--st;
-	return (pt);
+	for (length++; length--;)
+		ret[length] = *--str;
+	return (ret);
 }
 
 /**
  * print_str - print an input string
- * @s: string to be printed
+ * @str: string to be printed
  * Return: Null
  */
-void print_str(char *str, char *s)
+void print_str(char *str)
 {
-	if (!s)
+	int i = 0;
+
+	if (!str)
 		return;
-
-	int len = 0;
-
-	while (s[len] != '\0')
+	while (str[i] != '\0')
 	{
-		eprintch(str[len]);
-		len++;
+		printch(str[i]);
+		i++;
 	}
 }
 
@@ -66,16 +68,16 @@ void print_str(char *str, char *s)
  */
 int printch(char c)
 {
-	static int a;
-	static char buff[WRITE_BUF_SIZE];
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
 
-	if (a == BUF_FLUSH || a >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(1, buff, a);
-		a = 0;
+		write(1, buf, i);
+		i = 0;
 	}
 	if (c != BUF_FLUSH)
-		buff[a++] = c;
+		buf[i++] = c;
 	return (1);
 }
 
@@ -87,12 +89,13 @@ int printch(char c)
  */
 int comp_str(char *s1, char *s2)
 {
-	for (; *s1 && *s2; s1++, s2++)
+	while (*s1 && *s2)
 	{
 		if (*s1 != *s2)
 			return (*s1 - *s2);
+		s1++;
+		s2++;
 	}
-
 	if (*s1 == *s2)
 		return (0);
 	else

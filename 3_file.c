@@ -2,94 +2,94 @@
 
 /**
  * eprintch - to write the char to stderr
- * @ch: the char to be printed
+ * @c: the char to be printed
  * Return: On success 1
  */
-int eprintch(char ch)
+int eprintch(char c)
 {
-	static int l;
-	static char b[WRITE_BUF_SIZE];
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
 
-	if (ch == BUF_FLUSH || l >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(2, b, l);
-		l = 0;
+		write(2, buf, i);
+		i = 0;
 	}
-	if (ch != BUF_FLUSH)
-		b[l++] = ch;
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
 	return (1);
 }
 
 /**
  * write_ch - to write character to a given fd
- * @ch: a given character
+ * @c: a given character
  * @fd: the file descriptor
  * Return: On success 1
  */
-int write_ch(char ch, int fd)
+int write_ch(char c, int fd)
 {
 	static int i;
-	static char b[WRITE_BUF_SIZE];
+	static char buf[WRITE_BUF_SIZE];
 
-	if (ch == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(fd, b, i);
+		write(fd, buf, i);
 		i = 0;
 	}
-	if (ch != BUF_FLUSH)
-		b[i++] = ch;
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
 	return (1);
 }
 
 /**
  * pfd_input - to print an input string
- * @s: a given string
+ * @str: a given string
  * @fd: the file descriptor
- * Return: the number of chars put
+ * Return: number of chars put
  */
-int pfd_input(char *s, int fd)
+int pfd_input(char *str, int fd)
 {
-	int l = 0;
+	int i = 0;
 
-	if (!s)
+	if (!str)
 		return (0);
-	while (*s)
+	while (*str)
 	{
-		l += write_ch(*s++, fd);
+		i += write_ch(*str++, fd);
 	}
-	return (l);
+	return (i);
 }
 
 /**
  * cp_char - to duplicate characters
- * @p_str: the PATH string
- * @a: the starting index
- * @b: the stopping index
+ * @pathstr: the PATH string
+ * @start: the starting index
+ * @stop: the stopping index
  * Return: the pointer to new buffer
  */
-char *cp_char(char *p_str, int a, int b)
+char *cp_char(char *pathstr, int start, int stop)
 {
-	static char buff[1024];
-	int l = 0, m = 0;
+	static char buf[1024];
+	int i = 0, k = 0;
 
-	for (m = 0, l = a; l < b; l++)
-		if (p_str[l] != ':')
-			buff[m++] = p_str[l];
-	buff[m] = 0;
-	return (buff);
+	for (k = 0, i = start; i < stop; i++)
+		if (pathstr[i] != ':')
+			buf[k++] = pathstr[i];
+	buf[k] = 0;
+	return (buf);
 }
 
 /**
  * free_p - to free a pointer and NULLs address
- * @p: an address of pointer to free
+ * @ptr: an address of pointer to free
  * Return: 1 if success
  */
-int free_p(void **p)
+int free_p(void **ptr)
 {
-	if (p && *p)
+	if (ptr && *ptr)
 	{
-		free(*p);
-		*p = NULL;
+		free(*ptr);
+		*ptr = NULL;
 		return (1);
 	}
 	return (0);

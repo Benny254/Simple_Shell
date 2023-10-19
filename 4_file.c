@@ -4,18 +4,18 @@
  * chk_filetype - the function checks whether file
  * specified is regular file
  * @info: an info struct
- * @filepath: the path to file
+ * @path: the path to file
  * Return: 1 if true, 0 otherwise
  */
-int chk_filetype(*info, char *filepath)
+int chk_filetype(info_t *info, char *path)
 {
-	struct stat var;
+	struct stat st;
 
 	(void)info;
-	if (!filepath || stat(filepath, &var))
+	if (!path || stat(path, &st))
 		return (0);
 
-	if (var.var_mode & S_IFREG)
+	if (st.st_mode & S_IFREG)
 	{
 		return (1);
 	}
@@ -26,27 +26,27 @@ int chk_filetype(*info, char *filepath)
  * chk_cmd - to manage PATH environment variable and finds commands
  * executable within specified paths
  * @info: an info struct
- * @p_str: the PATH string
+ * @pathstr: the PATH string
  * @cmd: cmd to find
  * Return: the path of cmd if found, otherwise NULL
  */
-char *chk_cmd(info_t *info, char *p_str, char *cmd)
+char *chk_cmd(info_t *info, char *pathstr, char *cmd)
 {
-	int l = 0, p = 0;
+	int i = 0, curr_pos = 0;
 	char *path;
 
-	if (!p_str)
+	if (!pathstr)
 		return (NULL);
-	if ((new_str(cmd) > 2) && chk_start(cmd, "./"))
+	if ((len_str(cmd) > 2) && chk_start(cmd, "./"))
 	{
 		if (chk_filetype(info, cmd))
 			return (cmd);
 	}
 	while (1)
 	{
-		if (!p_str[l] || p_str[l] == ':')
+		if (!pathstr[i] || pathstr[i] == ':')
 		{
-			path = cp_char(p_str, p, l);
+			path = cp_char(pathstr, curr_pos, i);
 			if (!*path)
 				cat_str(path, cmd);
 			else
@@ -54,37 +54,33 @@ char *chk_cmd(info_t *info, char *p_str, char *cmd)
 				cat_str(path, "/");
 				cat_str(path, cmd);
 			}
-			if (chk_filetype(info, path))
+			if (is_cmd(info, path))
 				return (path);
-			if (!p_str[l])
+			if (!pathstr[i])
 				break;
-			p = l;
+			curr_pos = i;
 		}
-		l++;
+		i++;
 	}
 	return (NULL);
 }
 
 /**
  * cat_str - concanates two strings
- * @add_to: destination buffer
- * @add_from: source buffer
+ * @dest: destination buffer
+ * @src: source buffer
  * Return: pointer to destination buffer
  */
-char *cat_str(char *add_to, char *add_from)
+char *cat_str(char *dest, char *src)
 {
-	char *st = add_to;
+	char *ret = dest;
 
-	for (; *add_to; add_to++)
-
-		for (; *add_from; add_from++, add_to++)
-		{
-			*add_to = *add_from;
-		}
-
-	*add_to = *add_from;
-
-	return (st);
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = *src;
+	return (ret);
 }
 
 /**
@@ -103,18 +99,17 @@ char *chk_start(const char *haystack, const char *needle)
 
 /**
  * len_str - return the length of a string
- * @st: given string
+ * @s: given string
  * Return: length of string
  */
-int len_str(char *st)
+int len_str(char *s)
 {
-	int a;
+	int i = 0;
 
-	if (!st)
+	if (!s)
 		return (0);
 
-	for (a = 0; *st != '\0'; a++)
-		st++;
-
-	return (a);
+	while (*s++)
+		i++;
+	return (i);
 }

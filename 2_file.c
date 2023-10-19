@@ -3,38 +3,38 @@
 /**
  * string_convert - to convert string representation
  * of integer to integer value
- * @str: the given string
+ * @s: the given string
  * Return: the converted number otherwise -1 on error
  */
-int string_convert(char *str)
+int string_convert(char *s)
 {
-	int l = 0;
-	unsigned long int num = 0;
+	int i = 0;
+	unsigned long int result = 0;
 
-	if (*str == '+')
-		str++;
-	for (l = 0;  str[l] != '\0'; l++)
+	if (*s == '+')
+		s++;
+	for (i = 0;  s[i] != '\0'; i++)
 	{
-		if (str[l] >= '0' && str[l] <= '9')
+		if (s[i] >= '0' && s[i] <= '9')
 		{
-			num *= 10;
-			num += (str[l] - '0');
-			if (num > INT_MAX)
+			result *= 10;
+			result += (s[i] - '0');
+			if (result > INT_MAX)
 				return (-1);
 		}
 		else
 			return (-1);
 	}
-	return (num);
+	return (result);
 }
 
 /**
  * print_err - to print error message
  * @info: an info struct
- * @s: the string containing error type
+ * @estr: the string containing error type
  * Return: to converted number otherwise, -1 on error
  */
-void print_err(info_t *info, char *s)
+void print_err(info_t *info, char *estr)
 {
 	prints_string(info->fname);
 	prints_string(": ");
@@ -42,78 +42,78 @@ void print_err(info_t *info, char *s)
 	prints_string(": ");
 	prints_string(info->argv[0]);
 	prints_string(": ");
-	prints_string(s);
+	prints_string(estr);
 }
 
 /**
  * prints_string - to print input string
- * @s: the given string
+ * @str: the given string
  * Return: Null
  */
-void prints_string(char *s)
+void prints_string(char *str)
 {
-	int l = 0;
+	int i = 0;
 
-	if (!s)
+	if (!str)
 		return;
-	while (s[l] != '\0')
+	while (str[i] != '\0')
 	{
-		eprintch(s[l]);
-		l++;
+		eprintch(str[i]);
+		i++;
 	}
 }
 
 /**
  * dec_print - the function prints decimal number
- * @in: a given input
+ * @input: a given input
  * @fd: the file descriptor
  * Return: the number
  */
-int dec_print(int in, int fd)
+int dec_print(int input, int fd)
 {
-	int (*_printch)(char) = _printch;
-	int l, c = 0;
-	unsigned int _abs_, b;
+	int (*_printch)(char) = printch;
+	int i, count = 0;
+	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
 		_printch = eprintch;
-	if (in < 0)
+	if (input < 0)
 	{
-		_abs_ = -in;
+		_abs_ = -input;
 		_printch('-');
-		c++;
+		count++;
 	}
 	else
-		_abs_ = in;
-	b = _abs_;
-	for (l = 1000000000; l > 1; l /= 10)
+		_abs_ = input;
+	current = _abs_;
+	for (i = 1000000000; i > 1; i /= 10)
 	{
-		if (_abs_ / l)
+		if (_abs_ / i)
 		{
-			_printch('0' + b / l);
-			c++;
+			_printch('0' + current / i);
+			count++;
 		}
-		b %= l;
+		current %= i;
 	}
-	_printch('0' + b);
-	c++;
+	_printch('0' + current);
+	count++;
 
-	return (c);
+	return (count);
 }
 
 /**
  * rm_comment - to replace the first instance of '#' with '\0'
- * @addr: an address of string to modify
+ * @buf: an address of string to modify
  * Return: null
  */
-void rm_comment(char *addr)
+void rm_comment(char *buf)
 {
-	int l;
+	int i;
 
-	for (l = 0; addr[l] != '\0'; l++)
-		if (addr[l] == '#' && (!l || addr[l - 1] == ' '))
+	for (i = 0; buf[i] != '\0'; i++)
+		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
 		{
-			addr[l] = '\0';
+			buf[i] = '\0';
 			break;
 		}
 }

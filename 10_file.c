@@ -8,40 +8,40 @@
  */
 char **string_split(char *str, char d)
 {
-	int a, b, l, n, numw = 0;
+	int i, j, k, m, numwords = 0;
 	char **s;
 
 	if (str == NULL || str[0] == 0)
 		return (NULL);
-	for (a = 0; str[a] != '\0'; a++)
-		if ((str[a] != d && str[a + 1] == d) ||
-				(str[a] != d && !str[a + 1]) || str[a + 1] == d)
-			numw++;
-	if (numw == 0)
+	for (i = 0; str[i] != '\0'; i++)
+		if ((str[i] != d && str[i + 1] == d) ||
+		    (str[i] != d && !str[i + 1]) || str[i + 1] == d)
+			numwords++;
+	if (numwords == 0)
 		return (NULL);
-	s = malloc((1 + numw) * sizeof(char *));
+	s = malloc((1 + numwords) * sizeof(char *));
 	if (!s)
 		return (NULL);
-	for (a = 0, b = 0; b < numw; b++)
+	for (i = 0, j = 0; j < numwords; j++)
 	{
-		while (str[a] == d && str[a] != d)
-			a++;
-		l = 0;
-		while (str[a + l] != d && str[a + l] && str[a + l] != d)
-			l++;
-		s[b] = malloc((l + 1) * sizeof(char));
-		if (!s[b])
+		while (str[i] == d && str[i] != d)
+			i++;
+		k = 0;
+		while (str[i + k] != d && str[i + k] && str[i + k] != d)
+			k++;
+		s[j] = malloc((k + 1) * sizeof(char));
+		if (!s[j])
 		{
-			for (l = 0; l < b; l++)
-				free(s[l]);
+			for (k = 0; k < j; k++)
+				free(s[k]);
 			free(s);
 			return (NULL);
 		}
-		for (n = 0; n < l; n++)
-			s[b][n] = str[a++];
-		s[b][n] = 0;
+		for (m = 0; m < k; m++)
+			s[j][m] = str[i++];
+		s[j][m] = 0;
 	}
-	s[b] = NULL;
+	s[j] = NULL;
 	return (s);
 }
 
@@ -53,102 +53,102 @@ char **string_split(char *str, char d)
  */
 char **str_split(char *str, char *d)
 {
-	int a, b, l, n, numw = 0;
+	int i, j, k, m, numwords = 0;
 	char **s;
 
 	if (str == NULL || str[0] == 0)
 		return (NULL);
 	if (!d)
 		d = " ";
-	for (a = 0; str[a] != '\0'; a++)
-		if (!delimch(str[a], d) && (delimch(str[a + 1], d) || !str[a + 1]))
-			numw++;
+	for (i = 0; str[i] != '\0'; i++)
+		if (!is_delim(str[i], d) && (delimch(str[i + 1], d) || !str[i + 1]))
+			numwords++;
 
-	if (numw == 0)
+	if (numwords == 0)
 		return (NULL);
-	s = malloc((1 + numw) * sizeof(char *));
+	s = malloc((1 + numwords) * sizeof(char *));
 	if (!s)
 		return (NULL);
-	for (a = 0, b = 0; b < numw; b++)
+	for (i = 0, j = 0; j < numwords; j++)
 	{
-		while (delimch(str[a], d))
-			a++;
-		l = 0;
-		while (!delimch(str[a + l], d) && str[a + l])
-			l++;
-		s[b] = malloc((l + 1) * sizeof(char));
-		if (!s[b])
+		while (delimch(str[i], d))
+			i++;
+		k = 0;
+		while (!delimch(str[i + k], d) && str[i + k])
+			k++;
+		s[j] = malloc((k + 1) * sizeof(char));
+		if (!s[j])
 		{
-			for (l = 0; l < b; l++)
-				free(s[l]);
+			for (k = 0; k < j; k++)
+				free(s[k]);
 			free(s);
 			return (NULL);
 		}
-		for (n = 0; n < l; n++)
-			s[b][n] = str[a++];
-		s[b][n] = 0;
+		for (m = 0; m < k; m++)
+			s[j][m] = str[i++];
+		s[j][m] = 0;
 	}
-	s[b] = NULL;
+	s[j] = NULL;
 	return (s);
 }
 
 /**
  * allocmem- reallocate a block of memory
  * @ptr: pointer to previous malloc'ated block
- * @a: the byte size of previous block
- * @b: to byte size of new block
- * Return: the pointer to da ol'block nameen.
+ * @old_size: the byte size of previous block
+ * @new_size: to byte size of new block
+ * Return: the pointer to block
  */
-void *allocmem(void *ptr, unsigned int a, unsigned int b)
+void *allocmem(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *p;
 
 	if (!ptr)
-		return (malloc(b));
-	if (!b)
+		return (malloc(new_size));
+	if (!new_size)
 		return (free(ptr), NULL);
-	if (b == a)
+	if (new_size == old_size)
 		return (ptr);
 
-	p = malloc(b);
+	p = malloc(new_size);
 	if (!p)
 		return (NULL);
 
-	a = a < b ? a : b;
-	while (a--)
-		p[a] = ((char *)ptr)[a];
+	old_size = old_size < new_size ? old_size : new_size;
+	while (old_size--)
+		p[old_size] = ((char *)ptr)[old_size];
 	free(ptr);
 	return (p);
 }
 
 /**
- **bytemem - fill memory with constant byte
- *@s: a pointer to the memory area
- *@b: a byte to fill *s with
- *@n: an amount of bytes to be filled
- *Return: (s)
+ * *bytemem - fill memory with constant byte
+ * @s: a pointer to the memory area
+ * @b: a byte to fill *s with
+ * @n: an amount of bytes to be filled
+ * Return: (s)
  */
 char *bytemem(char *s, char b, unsigned int n)
 {
-	unsigned int a;
+	unsigned int i;
 
-	for (a = 0; a < n; a++)
-		s[a] = b;
+	for (i = 0; i < n; i++)
+		s[i] = b;
 	return (s);
 }
 
 /**
  * free_str - free a string of strings
- * @k: string to free
+ * @pp: string to free
  * Return: void
  */
-void free_str(char **k)
+void free_str(char **pp)
 {
-	char **a = k;
+	char **a = pp;
 
-	if (!k)
+	if (!pp)
 		return;
-	while (*k)
-		free(*k++);
+	while (*pp)
+		free(*pp++);
 	free(a);
 }
