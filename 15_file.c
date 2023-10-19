@@ -16,10 +16,10 @@ void infoclr(info_t *info)
  **cppy_str - copy a string
  *@dest: Destination
  *@src: source string
- *@ch: amount of characters to be copied
+ *@n: amount of characters to be copied
  *Return: string
  */
-char *cppy_str(char *dest, char *src, int ch)
+char *cppy_str(char *dest, char *src, int n)
 {
 	int i, j;
 	char *s = dest;

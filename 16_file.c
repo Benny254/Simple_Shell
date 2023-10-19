@@ -90,7 +90,7 @@ int vars_rp(info_t *info)
 		}
 		if (!comp_str(info->argv[i], "$$"))
 		{
-			replace_string(&(info->argv[i]),
+			new_str(&(info->argv[i]),
 				dupstr(change_number(getpid(), 10, 0)));
 			continue;
 		}

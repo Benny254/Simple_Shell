@@ -50,7 +50,7 @@ int _shell(info_t *info, char **av)
  * 1 if found but not successful,
  * -2 if signals exit()
  */
-int find_builtin(info_t *info)
+int builtincmd(info_t *info)
 {
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {

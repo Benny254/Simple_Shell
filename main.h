@@ -186,7 +186,7 @@ ssize_t buf_input(info_t *info, char **buf, size_t *len);
 ssize_t type_in(info_t *info);
 ssize_t bufread(info_t *info, char *buf, size_t *i);
 int nextline(info_t *info, char **ptr, size_t *length);
-void sigintHandler(__attribute__((unused))int sig_num);
+void handlec(__attribute__((unused))int sig_num);
 
 /** File 13 */
 char *file_hist(info_t *info);
@@ -204,7 +204,7 @@ void infofr(info_t *info, int all);
 
 /** File 15 */
 void infoclr(info_t *info);
-char *cppy_str(char *dest, char *src, int ch);
+char *cppy_str(char *dest, char *src, int n);
 char *concat_str(char *dest, char *src, int n);
 char *loc_ch(char *s, char c);
 
@@ -215,7 +215,7 @@ int vars_rp(info_t *info);
 
 /** File 17 */
 int _shell(info_t *info, char **av);
-int find_builtin(info_t *info);
+int builtincmd(info_t *info);
 void cmd_find(info_t *info);
 void run_cmd(info_t *info);
 

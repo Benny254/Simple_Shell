@@ -61,7 +61,7 @@ char **str_split(char *str, char *d)
 	if (!d)
 		d = " ";
 	for (i = 0; str[i] != '\0'; i++)
-		if (!is_delim(str[i], d) && (delimch(str[i + 1], d) || !str[i + 1]))
+		if (!delimch(str[i], d) && (delimch(str[i + 1], d) || !str[i + 1]))
 			numwords++;
 
 	if (numwords == 0)

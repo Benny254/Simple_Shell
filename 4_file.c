@@ -54,7 +54,7 @@ char *chk_cmd(info_t *info, char *pathstr, char *cmd)
 				cat_str(path, "/");
 				cat_str(path, cmd);
 			}
-			if (is_cmd(info, path))
+			if (chk_filetype(info, path))
 				return (path);
 			if (!pathstr[i])
 				break;

@@ -16,7 +16,7 @@ ssize_t buf_input(info_t *info, char **buf, size_t *len)
 	{
 		free(*buf);
 		*buf = NULL;
-		signal(SIGINT, sigintHandler);
+		signal(SIGINT, handlec);
 #if USE_GETLINE
 		r = nextline(buf, &len_p, stdin);
 #else
@@ -151,11 +151,11 @@ int nextline(info_t *info, char **ptr, size_t *length)
 }
 
 /**
- * sigintHandler - the block ctrl-C
+ * handlec - the block ctrl-C
  * @sig_num: signal number
  * Return: the void
  */
-void sigintHandler(__attribute__((unused))int sig_num)
+void handlec(__attribute__((unused))int sig_num)
 {
 	print_str("\n");
 	print_str("$ ");
